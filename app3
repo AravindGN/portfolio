@@ -1,0 +1,710 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Typography,
+  IconButton,
+  Box,
+  Checkbox,
+  FormControlLabel,
+  Paper,
+  CircularProgress,
+  Backdrop
+} from '@mui/material';
+import { Close, Sync, Save, Cancel, ArrowRight } from '@mui/icons-material';
+import { SelectChangeEvent } from '@mui/material/Select';
+import Grid from "@mui/material/Grid2";
+import SearchableMultiselect from './SearchableMultiselect';
+import CommentsSection from './CommentsSection';
+
+// Types
+interface FormData {
+  solutionName: string;
+  sectionType: string;
+  requestedYear: string;
+  primaryRationale: string;
+  porYear: string;
+  useOffloadProvision: boolean;
+  overrideSpectrum: boolean;
+  // New config fields
+  carrierAdd5G1: boolean;
+  carrierAdd5G2: boolean;
+  fourTX: boolean;
+  fddIMD: boolean;
+  optmChange: string;
+  sspt: string;
+}
+
+interface RowData {
+  InFlightParentId: string;
+  uneFiProjectType: string;
+  FuzeSiteId: string;
+  FuzeSiteType: string;
+}
+
+interface CreateMinionSolutionModalProps {
+  open: boolean;
+  onClose: () => void;
+  initialId?: string | null;
+  rowData: RowData;
+}
+
+// Config Component
+interface ConfigProps {
+  formData: FormData;
+  onChange: (field: keyof FormData) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => void;
+  loading: boolean;
+}
+
+const Config: React.FC<ConfigProps> = ({ formData, onChange, loading }) => (
+  <Grid container spacing={3}>
+    <Grid size={12}>
+      <Box display="flex" gap={2} flexWrap="wrap">
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={formData.useOffloadProvision}
+              onChange={onChange('useOffloadProvision')}
+              disabled={loading}
+              size="small"
+            />
+          }
+          label="Use Offload Provision"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={formData.overrideSpectrum}
+              onChange={onChange('overrideSpectrum')}
+              disabled={loading}
+              size="small"
+            />
+          }
+          label="Override Spectrum"
+        />
+      </Box>
+    </Grid>
+  </Grid>
+);
+
+
+const CheckboxList: React.FC<ConfigProps> = ({ formData, onChange, loading }) => (
+  <Grid container spacing={3}>
+            <Paper elevation={1} sx={{ p: 3, backgroundColor: 'white' }}>
+                  <Grid size={12}>
+      <Box display="flex" gap={2} flexWrap="wrap" alignItems="center">
+        <FormControlLabel
+          control={
+            <Checkbox 
+              checked={formData.carrierAdd5G1}
+              onChange={onChange('carrierAdd5G1')}
+              disabled={loading}
+              size="small"
+            />
+          }
+          label="Carrier Add-5G"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox 
+              checked={formData.carrierAdd5G2}
+              onChange={onChange('carrierAdd5G2')}
+              disabled={loading}
+              size="small"
+            />
+          }
+          label="Carrier Add-5G"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox 
+              checked={formData.fourTX}
+              onChange={onChange('fourTX')}
+              disabled={loading}
+              size="small"
+            />
+          }
+          label="4TX"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox 
+              checked={formData.fddIMD}
+              onChange={onChange('fddIMD')}
+              disabled={loading}
+              size="small"
+            />
+          }
+          label="FDD/IMD"
+        />
+        
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography variant="body2" color="text.secondary">OPTM Change</Typography>
+          <FormControl size="small" sx={{ minWidth: 140 }}>
+            <Select
+              value={formData.optmChange}
+              onChange={onChange('optmChange')}
+              displayEmpty
+              disabled={loading}
+            >
+              <MenuItem value="">None selected</MenuItem>
+              <MenuItem value="option1">Option 1</MenuItem>
+              <MenuItem value="option2">Option 2</MenuItem>
+              <MenuItem value="option3">Option 3</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography variant="body2" color="text.secondary">SSPT</Typography>
+          <FormControl size="small" sx={{ minWidth: 140 }}>
+            <Select
+              value={formData.sspt}
+              onChange={onChange('sspt')}
+              displayEmpty
+              disabled={loading}
+            >
+              <MenuItem value="">None selected</MenuItem>
+              <MenuItem value="sspt1">SSPT 1</MenuItem>
+              <MenuItem value="sspt2">SSPT 2</MenuItem>
+              <MenuItem value="sspt3">SSPT 3</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </Box>
+    </Grid>
+            </Paper>
+  </Grid>
+);
+
+const CreateMinionSolutionModal: React.FC<CreateMinionSolutionModalProps> = ({
+  open,
+  onClose,
+  rowData
+}) => {
+  const [formData, setFormData] = useState<FormData>({
+    solutionName: '',
+    sectionType: 'Modification',
+    requestedYear: '2025',
+    primaryRationale: 'Modification',
+    porYear: '2025',
+    useOffloadProvision: true,
+    overrideSpectrum: false,
+    // New config fields
+    carrierAdd5G1: false,
+    carrierAdd5G2: false,
+    fourTX: false,
+    fddIMD: false,
+    optmChange: '',
+    sspt: '',
+  });
+
+  const [loading, setLoading] = useState(false);
+    const [selectedOptions, setSelectedOptions] = useState<any>("");
+  
+  const [initialLoading, setInitialLoading] = useState(true);
+
+    const [options, setOptions] = useState({
+    sectionTypeList: [{ value: "1", label: "Modfication" }],
+    requestedYearsList: [{ value: "1", label: "2025" }],
+    primaryRationaleList: [{ value: "1", label: "Modfication" }],
+    porYearList: [{ value: "1", label: "2025" }]
+  });
+ const [comments, setComments] = useState<any[]>([]);
+
+  const handleAddComment = () => {
+    const newComment: any = {
+      id: `comment_${Date.now()}`,
+      text: ''
+    };
+    setComments([...comments, newComment]);
+  };
+
+
+  // Initialize modal data when opened
+  useEffect(() => {
+    if (open) {
+      setInitialLoading(true);
+      // Simulate initial data loading
+      const loadInitialData = async () => {
+        await new Promise(resolve => setTimeout(resolve, 1200));
+        setInitialLoading(false);
+      };
+      loadInitialData();
+    }
+  }, [open]);
+
+    const loadInitialData = async () => {
+    setLoading(true);
+    try {
+      // Load all dropdown options from API
+      const [
+        sectionTypesRes,
+        requestedYearsRes,
+        primaryRationaleRes,
+        porYearRes
+      ] = await Promise.all([
+        fetch('/api/minion-solutions/options/section-types'),
+        fetch('/api/minion-solutions/options/section-types'),
+        fetch('/api/minion-solutions/options/section-types'),
+        fetch('/api/minion-solutions/options/section-types'),
+      ]);
+
+      const [
+        sectionTypeList,
+        requestedYearsList,
+        primaryRationaleList,
+        porYearList
+      ] = await Promise.all([
+        sectionTypesRes.json(),
+        requestedYearsRes.json(),
+        primaryRationaleRes.json(),
+        porYearRes.json(),
+      ]);
+
+      setOptions({
+        sectionTypeList,
+        requestedYearsList,
+        primaryRationaleList,
+        porYearList
+      });
+    } catch (err) {
+      console.error('Error loading options:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInputChange = (field: keyof FormData) => (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>
+  ) => {
+    const target = event.target as HTMLInputElement;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    
+    setFormData(prev => ({ ...prev, [field]: value as any }));
+  };
+
+  const handleSave = async () => {
+    setLoading(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setLoading(false);
+    onClose();
+  };
+
+  const handleFuzeSync = async () => {
+    setLoading(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 800));
+    setLoading(false);
+  };
+
+  const handleValidate = async () => {
+    setLoading(true);
+    // Simulate validation API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setLoading(false);
+  };
+
+  return (
+    <Dialog 
+      open={open} 
+      onClose={onClose} 
+      maxWidth={false}
+      fullWidth
+      sx={{
+        '& .MuiDialog-paper': {
+          width: '95vw',
+          height: '95vh',
+          maxHeight: '95vh',
+          borderRadius: 2,
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)'
+        }
+      }}
+    >
+      <DialogTitle 
+        sx={{ 
+          backgroundColor: '#1976d2',
+          color: 'white',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          py: 2
+        }}
+      >
+        <Typography variant="h6" fontWeight={600}>
+          Create Minion Solution
+        </Typography>
+        <IconButton 
+          onClick={onClose} 
+          sx={{ color: 'white' }}
+          size="small"
+          disabled={initialLoading}
+        >
+          <Close />
+        </IconButton>
+      </DialogTitle>
+
+      <DialogContent sx={{ p: 3, backgroundColor: '#fafafa', position: 'relative' }}>
+        {initialLoading ? (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: '400px',
+              textAlign: 'center'
+            }}
+          >
+            <CircularProgress size={60} sx={{ mb: 3, color: '#1976d2' }} />
+            <Typography variant="h6" sx={{ mb: 1, color: '#1976d2', fontWeight: 600 }}>
+              Loading Solution Data...
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Please wait while we initialize the form
+            </Typography>
+          </Box>
+        ) : (
+          <>
+            {/* Basic Information Section */}
+            <Paper elevation={1} sx={{ p: 3, mb: 3, mt: 3, backgroundColor: 'white' }}>
+              {/* <Typography variant="h6" sx={{ mb: 2, color: '#1976d2', fontWeight: 500 }}>
+                Basic Information
+              </Typography> */}
+              <Grid container spacing={3}>
+                <Grid size={3}>
+                  <TextField
+                    label="Solution Name"
+                    value={formData.solutionName}
+                    onChange={handleInputChange('solutionName')}
+                    fullWidth
+                    required
+                    variant="outlined"
+                    size="small"
+                  />
+                </Grid>
+                <Grid size={3}>
+                  <FormControl fullWidth size="small" required>
+                    <InputLabel>Section Type</InputLabel>
+                    <Select
+                      value={formData.sectionType}
+                      onChange={handleInputChange('sectionType')}
+                      label="Section Type"
+                    >
+                      {options.sectionTypeList.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid size={3}>
+                  <FormControl fullWidth size="small" required>
+                    <InputLabel>Requested Year</InputLabel>
+                    <Select
+                      value={formData.requestedYear}
+                      onChange={handleInputChange('requestedYear')}
+                      label="Requested Year"
+                    >
+                      {options.requestedYearsList.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid size={3}>
+                  <FormControl fullWidth size="small" required>
+                    <InputLabel>Primary Rationale</InputLabel>
+                    <Select
+                      value={formData.primaryRationale}
+                      onChange={handleInputChange('primaryRationale')}
+                      label="Primary Rationale"
+                    >
+                      {options.primaryRationaleList.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </Paper>
+
+            {/* Enhanced Configuration Section */}
+            <Paper elevation={1} sx={{ p: 3, mb: 3, backgroundColor: 'white' }}>
+              {/* <Typography variant="h6" sx={{ mb: 2, color: '#1976d2', fontWeight: 500 }}>
+                Configuration
+              </Typography> */}
+              <Grid container spacing={3}>
+                <Grid size={3}>
+                  <FormControl fullWidth size="small" required>
+                    <InputLabel>POR Year</InputLabel>
+                    <Select
+                      value={formData.porYear}
+                      onChange={handleInputChange('porYear')}
+                      label="POR Year"
+                    >
+                      {options.porYearList.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid size={3}>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    startIcon={loading ? <CircularProgress size={16} /> : <Sync />}
+                    onClick={handleFuzeSync}
+                    disabled={loading}
+                    sx={{ 
+                      height: '40px',
+                      textTransform: 'none',
+                      borderColor: '#1976d2',
+                      color: '#1976d2',
+                      '&:hover': {
+                        backgroundColor: '#e3f2fd',
+                        borderColor: '#1976d2'
+                      }
+                    }}
+                  >
+                    Fuze Sync Pull
+                  </Button>
+                </Grid>
+              </Grid>
+              
+              {/* Enhanced Config Component */}
+              <Box sx={{ mt: 3, pt: 3, borderTop: '1px solid #e0e0e0' }}>
+                <Config 
+                  formData={formData} 
+                  onChange={handleInputChange} 
+                  loading={loading} 
+                />
+              </Box>
+            </Paper>
+
+            {/* System Data Section */}
+            <Paper elevation={1} sx={{ p: 3, backgroundColor: 'white' }}>
+              {/* <Typography variant="h6" sx={{ mb: 2, color: '#1976d2', fontWeight: 500 }}>
+                System Data
+              </Typography> */}
+              <Grid container spacing={3}>
+                <Grid size={formData.overrideSpectrum ? 2 : 3}>
+                  <TextField
+                    label="InFlight ParentId"
+                    value={rowData.InFlightParentId}
+                    disabled
+                    fullWidth
+                    variant="outlined"
+                    size="small"
+                    sx={{ 
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#666',
+                        backgroundColor: '#f5f5f5'
+                      }
+                    }}
+                  />
+                </Grid>
+                
+                {formData.overrideSpectrum && (
+                  <Grid size={3}>
+                    <FormControl fullWidth size="small" required>
+                      <InputLabel>Override Rationale</InputLabel>
+                      <Select
+                        value={formData.primaryRationale}
+                        onChange={handleInputChange('primaryRationale')}
+                        label="Override Rationale"
+                      >
+                        {options.primaryRationaleList.map(option => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                )}
+                
+                <Grid size={formData.overrideSpectrum ? 2 : 3}>
+                  <TextField
+                    label="UneFi ProjectType"
+                    value={rowData.uneFiProjectType}
+                    disabled
+                    fullWidth
+                    variant="outlined"
+                    size="small"
+                    sx={{ 
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#666',
+                        backgroundColor: '#f5f5f5'
+                      }
+                    }}
+                  />
+                </Grid>
+                
+                <Grid size={formData.overrideSpectrum ? 2 : 3}>
+                  <TextField
+                    label="Fuze SiteId"
+                    value={rowData.FuzeSiteId}
+                    disabled
+                    fullWidth
+                    variant="outlined"
+                    size="small"
+                    sx={{ 
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#666',
+                        backgroundColor: '#f5f5f5'
+                      }
+                    }}
+                  />
+                </Grid>
+                
+                <Grid size={formData.overrideSpectrum ? 3 : 3}>
+                  <TextField
+                    label="Fuze SiteType"
+                    value={rowData.FuzeSiteType}
+                    disabled
+                    fullWidth
+                    variant="outlined"
+                    size="small"
+                    sx={{ 
+                      '& .MuiInputBase-input.Mui-disabled': {
+                        WebkitTextFillColor: '#666',
+                        backgroundColor: '#f5f5f5'
+                      }
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </Paper>
+            <Box sx={{ pt: 3,
+
+             }}>
+<CheckboxList  formData={formData} 
+                  onChange={handleInputChange} 
+                  loading={loading} />
+   
+          </Box>
+          </>
+        )}
+<SearchableMultiselect
+  label="Search Services"
+  value={selectedOptions}
+  onChange={setSelectedOptions}
+  apiUrl="/api/search"
+  fullWidth
+/>
+  <CommentsSection
+          comments={comments}
+          onChange={setComments}
+          onAddComment={handleAddComment}
+        />
+      </DialogContent>
+
+      <DialogActions sx={{ p: 3, backgroundColor: '#fafafa', borderTop: '1px solid #e0e0e0' }}>
+        <Button 
+          onClick={onClose} 
+          variant="outlined"
+          startIcon={<Cancel />}
+          disabled={initialLoading}
+          sx={{ 
+            mr: 2,
+            textTransform: 'none',
+            borderColor: '#757575',
+            color: '#757575'
+          }}
+        >
+          Cancel
+        </Button>
+        <Button 
+          onClick={handleValidate}
+          variant="outlined"
+          startIcon={loading ? <CircularProgress size={16} /> : <ArrowRight />}
+          disabled={loading || initialLoading}
+          sx={{ 
+            mr: 2,
+            textTransform: 'none',
+            borderColor: '#757575',
+            color: '#757575'
+          }}
+        >
+          {loading ? 'Validating...' : 'Validate'}
+        </Button>
+        <Button 
+          onClick={handleSave}
+          variant="contained"
+          startIcon={loading ? <CircularProgress size={16} color="inherit" /> : <Save />}
+          disabled={loading || !formData.solutionName.trim() || initialLoading}
+          sx={{ 
+            backgroundColor: '#1976d2',
+            textTransform: 'none',
+            minWidth: 120,
+            '&:hover': {
+              backgroundColor: '#1565c0'
+            }
+          }}
+        >
+          {loading ? 'Saving...' : 'Create Solution'}
+        </Button>
+      </DialogActions>
+
+     
+    </Dialog>
+  );
+};
+
+// Demo Component
+const App: React.FC = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  return (
+    <Box sx={{ p: 4, backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
+      <Typography variant="h4" sx={{ mb: 4, fontWeight: 600, color: '#1976d2' }}>
+        Solution Management System
+      </Typography>
+      
+      <Button 
+        variant="contained" 
+        size="large"
+        onClick={() => setModalOpen(true)}
+        sx={{ 
+          backgroundColor: '#1976d2',
+          textTransform: 'none',
+          px: 4,
+          py: 1.5,
+          fontSize: '16px'
+        }}
+      >
+        Create New Solution
+      </Button>
+      
+      <CreateMinionSolutionModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        rowData={{
+          InFlightParentId: 'IFP-2024-001',
+          uneFiProjectType: 'Infrastructure',
+          FuzeSiteId: 'FSI-12345',
+          FuzeSiteType: 'Primary',
+        }}
+      />
+    </Box>
+  );
+};
+
+export default App;
