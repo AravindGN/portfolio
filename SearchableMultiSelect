@@ -1,0 +1,271 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import {
+  TextField,
+  Autocomplete,
+  Chip,
+  ListItem,
+  ListItemText,
+  CircularProgress,
+  Box
+} from '@mui/material';
+import { Search } from '@mui/icons-material';
+
+// Types
+interface SearchableOption {
+  id: string;
+  label: string;
+  description?: string;
+}
+
+interface SearchableMultiselectProps {
+  label: string;
+  value: SearchableOption[];
+  onChange: (newValue: SearchableOption[]) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  fullWidth?: boolean;
+  apiUrl?: string; // Optional API URL for fetching data
+  onFetch?: (searchTerm: string) => Promise<SearchableOption[]>; // Custom fetch function
+}
+
+const SearchableMultiselect: React.FC<SearchableMultiselectProps> = ({
+  label,
+  value,
+  onChange,
+  placeholder = "Type to search...",
+  disabled = false,
+  fullWidth = false,
+  apiUrl,
+  onFetch
+}) => {
+  const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState<SearchableOption[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  // Default fetch function using apiUrl or mock data
+  const defaultFetch = async (searchTerm: string): Promise<SearchableOption[]> => {
+    if (apiUrl) {
+      // Real API call
+      const response = await fetch(`${apiUrl}?q=${encodeURIComponent(searchTerm)}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      const data = await response.json();
+      return data.map((item: any) => ({
+        id: item.id || item.value,
+        label: item.label || item.name || item.title,
+        description: item.description || item.subtitle
+      }));
+    } else {
+      // Mock data for demo
+      await new Promise(resolve => setTimeout(resolve, 800));
+      return [
+        { id: '1', label: `Service ${searchTerm} Alpha`, description: 'Primary service option' },
+        { id: '2', label: `Service ${searchTerm} Beta`, description: 'Secondary service option' },
+        { id: '3', label: `Service ${searchTerm} Gamma`, description: 'Advanced service option' },
+        { id: '4', label: `${searchTerm} Network Service`, description: 'Network infrastructure' },
+        { id: '5', label: `${searchTerm} Cloud Service`, description: 'Cloud-based solution' },
+        { id: '6', label: `Advanced ${searchTerm} Suite`, description: 'Enterprise solution' }
+      ];
+    }
+  };
+
+  // Debounced fetch function
+  const debouncedFetch = useMemo(() => {
+    const timeoutRef = { current: null as NodeJS.Timeout | null };
+    
+    return (searchTerm: string) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      
+      timeoutRef.current = setTimeout(async () => {
+        if (searchTerm.length >= 3) {
+          setLoading(true);
+          try {
+            const fetchFunction = onFetch || defaultFetch;
+            const data = await fetchFunction(searchTerm);
+            setOptions(data);
+          } catch (error) {
+            console.error('Failed to fetch options:', error);
+            setOptions([]);
+          } finally {
+            setLoading(false);
+          }
+        } else {
+          setOptions([]);
+          setLoading(false);
+        }
+      }, 300); // 300ms delay
+    };
+  }, [apiUrl, onFetch]);
+
+  useEffect(() => {
+    debouncedFetch(inputValue);
+  }, [inputValue, debouncedFetch]);
+
+  // Clear options when component unmounts or input is cleared
+  useEffect(() => {
+    return () => {
+      setOptions([]);
+    };
+  }, []);
+
+  return (
+    <Autocomplete
+      multiple
+      open={open}
+      onOpen={() => setOpen(true)}
+      onClose={() => setOpen(false)}
+      value={value}
+      onChange={(event, newValue) => onChange(newValue)}
+      inputValue={inputValue}
+      onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
+      }}
+      options={options}
+      getOptionLabel={(option) => option.label}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
+      loading={loading}
+      disabled={disabled}
+      fullWidth={fullWidth}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={label}
+          placeholder={value.length === 0 ? placeholder : ''}
+          size="small"
+          InputProps={{
+            ...params.InputProps,
+            startAdornment: (
+              <>
+                <Search sx={{ color: 'text.secondary', mr: 1, fontSize: 20 }} />
+                {params.InputProps.startAdornment}
+              </>
+            ),
+            endAdornment: (
+              <>
+                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {params.InputProps.endAdornment}
+              </>
+            ),
+          }}
+          helperText={
+            inputValue.length > 0 && inputValue.length < 3 
+              ? `Type ${3 - inputValue.length} more character(s) to search`
+              : undefined
+          }
+        />
+      )}
+      renderOption={(props, option) => (
+        <ListItem {...props} key={option.id}>
+          <ListItemText
+            primary={option.label}
+            secondary={option.description}
+            primaryTypographyProps={{ fontSize: '0.875rem' }}
+            secondaryTypographyProps={{ fontSize: '0.75rem', color: 'text.secondary' }}
+          />
+        </ListItem>
+      )}
+      renderTags={(value, getTagProps) =>
+        value.map((option, index) => (
+          <Chip
+            {...getTagProps({ index })}
+            key={option.id}
+            label={option.label}
+            size="small"
+            color="primary"
+            variant="outlined"
+          />
+        ))
+      }
+      noOptionsText={
+        inputValue.length < 3 
+          ? "Type at least 3 characters to search"
+          : loading 
+          ? "Loading..."
+          : "No options found"
+      }
+      sx={{
+        '& .MuiAutocomplete-tag': {
+          margin: '2px',
+          maxWidth: 'calc(100% - 10px)',
+        },
+        '& .MuiAutocomplete-inputRoot': {
+          paddingTop: '4px',
+          paddingBottom: '4px',
+        }
+      }}
+    />
+  );
+};
+
+// Demo Component showing usage
+const DemoApp: React.FC = () => {
+  const [selectedOptions, setSelectedOptions] = useState<SearchableOption[]>([]);
+
+  // Example with custom fetch function
+  const customFetch = async (searchTerm: string): Promise<SearchableOption[]> => {
+    // Your custom API call logic here
+    const response = await fetch(`/api/your-endpoint?search=${searchTerm}`);
+    const data = await response.json();
+    
+    return data.map((item: any) => ({
+      id: item.id,
+      label: item.name,
+      description: item.details
+    }));
+  };
+
+  return (
+    <Box sx={{ p: 4, maxWidth: 600 }}>
+      <h2>Searchable Multiselect Demo</h2>
+      
+      {/* Basic usage with mock data */}
+      <Box sx={{ mb: 4 }}>
+        <h3>Basic Usage (Mock Data)</h3>
+        <SearchableMultiselect
+          label="Search Services"
+          value={selectedOptions}
+          onChange={setSelectedOptions}
+          placeholder="Type at least 3 characters..."
+          fullWidth
+        />
+      </Box>
+
+      {/* Usage with API URL */}
+      <Box sx={{ mb: 4 }}>
+        <h3>With API URL</h3>
+        <SearchableMultiselect
+          label="Search with API"
+          value={selectedOptions}
+          onChange={setSelectedOptions}
+          apiUrl="/api/search"
+          fullWidth
+        />
+      </Box>
+
+      {/* Usage with custom fetch function */}
+      <Box sx={{ mb: 4 }}>
+        <h3>With Custom Fetch Function</h3>
+        <SearchableMultiselect
+          label="Search with Custom Fetch"
+          value={selectedOptions}
+          onChange={setSelectedOptions}
+          onFetch={customFetch}
+          fullWidth
+        />
+      </Box>
+
+      {/* Display selected values */}
+      <Box sx={{ mt: 4 }}>
+        <h3>Selected Options:</h3>
+        <pre>{JSON.stringify(selectedOptions, null, 2)}</pre>
+      </Box>
+    </Box>
+  );
+};
+
+export default SearchableMultiselect;
+export { DemoApp, type SearchableOption };
