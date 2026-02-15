@@ -1,0 +1,515 @@
+import React, { useState, useRef, useEffect } from 'react';
+import jspreadsheet from 'jspreadsheet';
+import 'jspreadsheet/dist/jspreadsheet.css';
+import 'jspreadsheet/dist/jspreadsheet.themes.css';
+import 'jsuites/dist/jsuites.css';
+import {
+  Box,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  IconButton,
+} from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
+import { jspreadsheetLicense } from '../config/JspreadsheetLicense';
+import { IChangeRecord } from '../types';
+
+// Set jspreadsheet license
+jspreadsheet.setLicense(jspreadsheetLicense);
+
+// Carrier dropdown options
+const carrierOptions = [
+  'B2_15MHz_1025',
+  'B4_20MHz_2050',
+  'B5_10MHz_2560',
+  'B13_10MHz_5230',
+  'B66_15MHz_132672',
+  'Bn261_100MHz_2073333',
+  'Bn261_100MHz_2074999',
+  'Bn261_100MHz_2076665',
+  'Bn261_100MHz_2080833',
+  'Bn261_100MHz_2082499',
+  'Bn261_100MHz_2084165'
+];
+
+// Carrier Band dropdown options
+const carrierBandOptions = [
+  '2',
+  '4',
+  '5',
+  '12',
+  '13',
+  '66',
+  'n2',
+  'n5',
+  'n66',
+  'n261'
+];
+
+// Band Info dropdown options
+const bandInfoOptions = [
+  '2',
+  '4',
+  '5',
+  '12',
+  '13',
+  '66',
+  'n2',
+  'n5',
+  'n66',
+  'n261'
+];
+
+// Initial dummy data for 5 people with default values
+const initialRows = [
+  {
+    id: 11,
+    bandClass: 'LTE',
+  },
+  {
+    id: 4,
+    name: 'Alice Williams',
+    age: 28,
+    city: 'Houston',
+    isPresentCommunityAddress: false,
+    bandClass: 'LTE',
+    carrier: 'B66_15MHz_132672',
+    sector: 'Sector C',
+    enodebName: 'HOU_Tower_004',
+    siteName: 'Site_Houston_4',
+    fuzeSiteId: 'FUZE_004',
+    siteRecordId: 'REC_004',
+    siteNumber: 'SN004',
+    siteVersion: 'v1.0',
+    supportHeight: '90',
+    transmitterName: 'TX_004',
+    transmitterRecordId: 'TX_REC_004',
+    azimuthDeg: '180',
+    antennaManufacturer: 'CommScope',
+    antennaModel: 'FFHH-65C-R3',
+    antennaOrderablePartName: 'CommScope-FFHH',
+    antennaMaxGainDbD: '19',
+    antennaHBw: '65',
+    antennaHeight: '26',
+    antennaWidth: '13',
+    antennaDepth: '8',
+    antennaWeight: '48',
+    antennaCenterline: '82',
+    antennaTipHeight: '88',
+    mechanicalTilt: '5',
+    antennaPatternElectricalTilt: '5',
+    additionalElectricalTilt: '3',
+    rrhManufacturer: 'Nokia',
+    rrhModelName: 'FIA',
+    radioLocation: 'Tower',
+    tmaModel: 'TMA-700',
+    tmaManufacturer: 'Andrew',
+    eNodeBId: '456789',
+    maxErp: '280',
+    maxErpAlt: '260',
+    totalErp: '560',
+    carrierBand: '66',
+    bandInfo: '66',
+    airInterface: 'LTE',
+    radioAccessTechnology: '4G',
+    centerChannel: '132672',
+    channelBandwidth: '15',
+    cellId: '4',
+    numberOfTxAntennaPo: '2',
+    numberOfRxAntennaPo: '2',
+    sharedAntenna: 'No',
+    mountPosition: 'Tower',
+    mountFace: 'Front',
+    gnbEnbVendor: 'Ericsson',
+    cellDlTotalPower: '45',
+    configuredMaxTxPower: '39',
+    pMaxDbm: '45',
+    diMaxTxPower: '39',
+    regulatoryPower: '280',
+    regulatoryPowerLimit: '280',
+    nonPsdRegulatoryPower: '140',
+    regulatoryPowerUnitless: '9',
+    nonPsdRegulatoryPowerUnitless: '4.5',
+    alternateRegulatoryPowerW: '250',
+    gnbDuNumber: 'DU004',
+    gnbDuName: 'DU_HOU_004',
+    isRepeater: false
+  },
+  {
+    id: 5,
+    name: 'Charlie Brown',
+    age: 42,
+    city: 'Phoenix',
+    isPresentCommunityAddress: false,
+    bandClass: '5G',
+    carrier: 'Bn261_100MHz_2076665',
+    sector: 'Sector B',
+    enodebName: 'PHX_Tower_005',
+    siteName: 'Site_Phoenix_5',
+    fuzeSiteId: 'FUZE_005',
+    siteRecordId: 'REC_005',
+    siteNumber: 'SN005',
+    siteVersion: 'v1.0',
+    supportHeight: '110',
+    transmitterName: 'TX_005',
+    transmitterRecordId: 'TX_REC_005',
+    azimuthDeg: '300',
+    antennaManufacturer: 'Samsung',
+    antennaModel: 'MT64N273F',
+    antennaOrderablePartName: 'Samsung-MT64N',
+    antennaMaxGainDbD: '22',
+    antennaHBw: '65',
+    antennaHeight: '32',
+    antennaWidth: '16',
+    antennaDepth: '11',
+    antennaWeight: '60',
+    antennaCenterline: '95',
+    antennaTipHeight: '102',
+    mechanicalTilt: '3',
+    antennaPatternElectricalTilt: '8',
+    additionalElectricalTilt: '4',
+    rrhManufacturer: 'Samsung',
+    rrhModelName: 'DU-IF',
+    radioLocation: 'Rooftop',
+    tmaModel: 'TMA-2500',
+    tmaManufacturer: 'CommScope',
+    eNodeBId: '567890',
+    maxErp: '450',
+    maxErpAlt: '420',
+    totalErp: '900',
+    carrierBand: 'n261',
+    bandInfo: 'n261',
+    airInterface: '5G',
+    radioAccessTechnology: '5G-NR',
+    centerChannel: '2076665',
+    channelBandwidth: '100',
+    cellId: '5',
+    numberOfTxAntennaPo: '4',
+    numberOfRxAntennaPo: '4',
+    sharedAntenna: 'Yes',
+    mountPosition: 'Rooftop',
+    mountFace: 'Side',
+    gnbEnbVendor: 'Samsung',
+    cellDlTotalPower: '52',
+    configuredMaxTxPower: '45',
+    pMaxDbm: '52',
+    diMaxTxPower: '45',
+    regulatoryPower: '450',
+    regulatoryPowerLimit: '450',
+    nonPsdRegulatoryPower: '225',
+    regulatoryPowerUnitless: '14',
+    nonPsdRegulatoryPowerUnitless: '7',
+    alternateRegulatoryPowerW: '400',
+    gnbDuNumber: 'DU005',
+    gnbDuName: 'DU_PHX_005',
+    isRepeater: false
+  },
+];
+
+// Column definitions matching AtollDataTab format
+const dynamicColumns = [
+  { name: 'bandClass', type: 'text', title: 'Band Class', width: 120 },
+  { name: 'carrier', type: 'dropdown', title: 'Carrier', width: 120, source: carrierOptions, readOnly: false },
+  { name: 'sector', type: 'text', title: 'Sector', width: 100 },
+  { name: 'enodebName', type: 'text', title: 'gNB/eNB Name', width: 150 },
+  { name: 'siteName', type: 'text', title: 'Site Name', width: 140 },
+  { name: 'fuzeSiteId', type: 'text', title: 'Fuze Site ID', width: 140 },
+  { name: 'siteRecordId', type: 'text', title: 'Site Record ID', width: 150 },
+  { name: 'siteNumber', type: 'text', title: 'Site Number', width: 140 },
+  { name: 'siteVersion', type: 'text', title: 'Site Version', width: 130 },
+  { name: 'supportHeight', type: 'text', title: 'Support Height (ft)', width: 160 },
+  { name: 'transmitterName', type: 'text', title: 'Transmitter Name', width: 160 },
+  { name: 'transmitterRecordId', type: 'text', title: 'Transmitter Record Id', width: 180 },
+  { name: 'azimuthDeg', type: 'text', title: 'Azimuth (deg)', width: 140 },
+  { name: 'antennaManufacturer', type: 'text', title: 'Antenna Manufacturer', width: 170 },
+  { name: 'antennaModel', type: 'text', title: 'Antenna Model', width: 150 },
+  { name: 'antennaOrderablePartName', type: 'text', title: 'Antenna Orderable Part Name', width: 220 },
+  { name: 'antennaMaxGainDbD', type: 'text', title: 'Antenna Max Gain (dBd)', width: 170 },
+  { name: 'antennaHBw', type: 'text', title: 'Antenna H-BW (deg)', width: 160 },
+  { name: 'antennaHeight', type: 'text', title: 'Antenna Height (in)', width: 170 },
+  { name: 'antennaWidth', type: 'text', title: 'Antenna Width (in)', width: 160 },
+  { name: 'antennaDepth', type: 'text', title: 'Antenna Depth (in)', width: 160 },
+  { name: 'antennaWeight', type: 'text', title: 'Antenna Weight (lbs)', width: 170 },
+  { name: 'antennaCenterline', type: 'text', title: 'Antenna Centerline (ft)', width: 180 },
+  { name: 'antennaTipHeight', type: 'text', title: 'Antenna Tip Height (ft)', width: 180 },
+  { name: 'mechanicalTilt', type: 'text', title: 'Mechanical Tilt (deg)', width: 180 },
+  { name: 'antennaPatternElectricalTilt', type: 'text', title: 'Antenna Pattern Electrical Tilt (deg)', width: 220 },
+  { name: 'additionalElectricalTilt', type: 'text', title: 'Additional Electrical Tilt (deg)', width: 220 },
+  { name: 'rrhManufacturer', type: 'text', title: 'RRH Manufacturer', width: 160 },
+  { name: 'rrhModelName', type: 'text', title: 'RRH Model Name', width: 150 },
+  { name: 'radioLocation', type: 'text', title: 'Radio Location', width: 150 },
+  { name: 'tmaModel', type: 'text', title: 'TMA Model', width: 130 },
+  { name: 'tmaManufacturer', type: 'text', title: 'TMA Manufacturer', width: 160 },
+  { name: 'eNodeBId', type: 'text', title: 'eNodeB ID', width: 130 },
+  { name: 'maxErp', type: 'text', title: 'Max ERP (W)', width: 130 },
+  { name: 'maxErpAlt', type: 'text', title: 'Alternate Max ERP (W)', width: 170 },
+  { name: 'totalErp', type: 'text', title: 'Total ERP (W)', width: 140 },
+  { name: 'carrierBand', type: 'dropdown', title: 'Carrier', width: 120, source: carrierBandOptions, readOnly: false },
+  { name: 'bandInfo', type: 'dropdown', title: 'Band Info', width: 130, source: bandInfoOptions, readOnly: false },
+  { name: 'airInterface', type: 'text', title: 'Air Interface', width: 140 },
+  { name: 'radioAccessTechnology', type: 'text', title: 'Radio Access Technology', width: 190 },
+  { name: 'centerChannel', type: 'text', title: 'Center Channel', width: 150 },
+  { name: 'channelBandwidth', type: 'text', title: 'Channel Bandwidth (MHz)', width: 180 },
+  { name: 'cellId', type: 'text', title: 'Cell ID', width: 120 },
+  { name: 'numberOfTxAntennaPo', type: 'text', title: 'Number of Tx Antenna Po', width: 190 },
+  { name: 'numberOfRxAntennaPo', type: 'text', title: 'Number of Rx Antenna Po', width: 190 },
+  { name: 'sharedAntenna', type: 'text', title: 'Shared Antenna', width: 150 },
+  { name: 'mountPosition', type: 'text', title: 'Mount Position', width: 150 },
+  { name: 'mountFace', type: 'text', title: 'Mount Face', width: 130 },
+  { name: 'gnbEnbVendor', type: 'text', title: 'gNB/eNB Vendor', width: 150 },
+  { name: 'cellDlTotalPower', type: 'text', title: 'Cell DL Total Power (dBm)', width: 190 },
+  { name: 'configuredMaxTxPower', type: 'text', title: 'Configured Max Tx Power', width: 190 },
+  { name: 'pMaxDbm', type: 'text', title: 'pMax (dBm)', width: 130 },
+  { name: 'diMaxTxPower', type: 'text', title: 'DI Max Tx Power', width: 160 },
+  { name: 'regulatoryPower', type: 'text', title: 'Regulatory Power', width: 160 },
+  { name: 'regulatoryPowerLimit', type: 'text', title: 'Regulatory PowerLimit', width: 170 },
+  { name: 'nonPsdRegulatoryPower', type: 'text', title: 'Non-PSD Regulatory Power', width: 200 },
+  { name: 'regulatoryPowerUnitless', type: 'text', title: 'Regulatory Power (Unitless)', width: 190 },
+  { name: 'nonPsdRegulatoryPowerUnitless', type: 'text', title: 'Non-PSD Regulatory Power (Unitless)', width: 240 },
+  { name: 'alternateRegulatoryPowerW', type: 'text', title: 'Alternate Regulatory Power (W)', width: 210 },
+  { name: 'gnbDuNumber', type: 'text', title: 'gNB DU Number', width: 150 },
+  { name: 'gnbDuName', type: 'text', title: 'gNB DU Name', width: 150 },
+  { name: 'isRepeater', type: 'checkbox', title: 'Is Repeater', width: 130, readOnly: false },
+];
+
+// Convert initial data to array format for jspreadsheet
+const convertInitialData = () => {
+  const result: any[][] = [];
+
+  initialRows.forEach((row) => {
+    const rowData: any[] = [];
+
+    dynamicColumns.forEach((col) => {
+      const fieldName = col.name;
+      const value = (row as any)[fieldName];
+
+      rowData.push(
+        value === undefined || value === null
+          ? ''
+          : typeof value === 'boolean'
+            ? value
+            : String(value)
+      );
+    });
+
+    result.push(rowData);
+  });
+
+  console.log('Initial data for spreadsheet:', result);
+  return result;
+};
+
+
+export const JspreadsheetGrid: React.FC = () => {
+  const spreadsheetRef = useRef<HTMLDivElement>(null);
+  const spreadsheetInstance = useRef<any>(null);
+
+  // State
+  const [pendingChanges, setPendingChanges] = useState<IChangeRecord[]>([]);
+  const [showSaveTable, setShowSaveTable] = useState(false);
+
+  // Initialize spreadsheet
+useEffect(() => {
+  if (!spreadsheetRef.current) return;
+  if (spreadsheetInstance.current) {
+    jspreadsheet.destroy(spreadsheetRef.current);
+    spreadsheetInstance.current = null;
+  }
+
+  spreadsheetInstance.current = jspreadsheet(spreadsheetRef.current, {
+    data: initialRows,
+    columns: dynamicColumns,
+    search: true,
+    pagination: 5,
+    paginationOptions: [5, 10, 25],
+    filters: true,
+    tableOverflow: true,
+    worksheetName: 'AtollData',
+    freezeColumns: 1,
+    minDimensions: [dynamicColumns.length, 0],
+    minSpareRows: 2,
+
+    onchange: (instance: any, cell: any, x: number, y: number, value: any, oldValue: any) => {
+      if (value === oldValue) return;
+
+      const field = dynamicColumns[x]?.name;
+      if (!field) return;
+
+      setPendingChanges((prev) => {
+        const filtered = prev.filter(
+          (c) => !(c.rowIndex === y && c.field === field)
+        );
+
+        return [
+          ...filtered,
+          {
+            rowIndex: y,
+            name: `Row ${y + 1}`,
+            field,
+            oldValue: oldValue ?? '',
+            newValue: value,
+          },
+        ];
+      });
+    },
+  } as any);
+
+  return () => {
+    if (spreadsheetRef.current) {
+      jspreadsheet.destroy(spreadsheetRef.current);
+    }
+  };
+}, []);
+
+
+  // Handle save click - show table view
+  const handleSaveClick = () => {
+
+    if (pendingChanges.length === 0) return;
+    setShowSaveTable(true);
+  };
+
+  // Confirm save - apply all changes
+  const confirmSave = () => {
+    setPendingChanges([]);
+    setShowSaveTable(false);
+  };
+
+  // Cancel save
+  const handleCancel = () => {
+    setShowSaveTable(false);
+  };
+
+  // Remove a single change from pending
+  const removeChange = (index: number) => {
+    setPendingChanges((prev) => prev.filter((_, i) => i !== index));
+    if (pendingChanges.length <= 1) {
+      setShowSaveTable(false);
+    }
+  };
+
+  // Get field display name
+  const getFieldDisplayName = (field: string): string => {
+    const col = dynamicColumns.find(c => c.name === field);
+    return col?.title || field;
+  };
+
+  return (
+    <Box>
+      {/* Action Buttons */}
+      <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<SaveIcon />}
+          onClick={handleSaveClick}
+          disabled={pendingChanges.length === 0}
+        >
+          Save Changes ({pendingChanges.length})
+        </Button>
+      </Box>
+
+      {/* Save Changes Table View - Inline Material UI Table */}
+      {showSaveTable && pendingChanges.length > 0 && (
+        <Box sx={{ mb: 3 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+            <Typography variant="h6" fontWeight="bold">
+              Pending Changes ({pendingChanges.length})
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <Button
+                variant="contained"
+                color="error"
+                size="small"
+                onClick={handleCancel}
+                startIcon={<CloseIcon />}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                color="success"
+                size="small"
+
+                onClick={confirmSave}
+                startIcon={<CheckIcon />}
+              >
+                Confirm Save
+              </Button>
+            </Box>
+          </Box>
+
+          <TableContainer component={Paper} variant="outlined" sx={{ maxHeight: 300 }}>
+            <Table size="small" stickyHeader>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Row</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Field</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Old Value</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>New Value</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {pendingChanges.map((change, index) => (
+                  <TableRow key={index} hover>
+                    <TableCell>{change.name}</TableCell>
+                    <TableCell>{getFieldDisplayName(change.field)}</TableCell>
+                    <TableCell>
+                      <Box sx={{
+                        display: 'inline-block',
+                        px: 1,
+                        py: 0.5,
+                        borderRadius: 1,
+                        backgroundColor: '#ffebee',
+                        color: '#c62828',
+                        fontWeight: 'bold'
+                      }}>
+                        {String(change.oldValue)}
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Box sx={{
+                        display: 'inline-block',
+                        px: 1,
+                        py: 0.5,
+                        borderRadius: 1,
+                        backgroundColor: '#e8f5e9',
+                        color: '#2e7d32',
+                        fontWeight: 'bold'
+                      }}>
+                        {String(change.newValue)}
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <IconButton
+                        size="small"
+                        onClick={() => removeChange(index)}
+                        color="error"
+                      >
+                        <CloseIcon fontSize="small" />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      )}
+
+      {/* Spreadsheet Container */}
+      <div ref={spreadsheetRef} style={{ width: '100%' }} />
+    </Box>
+  );
+};
+
+export default JspreadsheetGrid;
