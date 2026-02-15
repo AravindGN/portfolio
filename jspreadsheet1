@@ -378,7 +378,13 @@ useEffect(() => {
   };
 
   // Confirm save - apply all changes
+
   const confirmSave = () => {
+    // Get current data from spreadsheet and log it
+    if (spreadsheetInstance.current) {
+      const currentData = spreadsheetInstance.current.getData();
+      console.log('Updated spreadsheet data:', currentData);
+    }
     setPendingChanges([]);
     setShowSaveTable(false);
   };
