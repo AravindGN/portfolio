@@ -1,0 +1,3229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RFDS Plumbing Auto (GoJS v3 iframe)</title>
+  <script src="./release/go.js"></script>
+  <script src="./extensions/AvoidsLinksRouter.js"></script>
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f8f9fa;
+    }
+
+    #root {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    #myDiagramDiv {
+      width: 100%;
+      height: 100%;
+      background-color: #f8f9fa;
+      border: 0;
+    }
+
+    #overlay {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      pointer-events: none;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    #pill {
+      pointer-events: none;
+      /* Force strong contrast so the status pill is readable even if parent/theme styles leak in */
+      background: rgba(13, 37, 64, 0.92); /* dark blue */
+      border: 1px solid rgba(10, 37, 64, 0.55);
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      max-width: 60vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-rendering: geometricPrecision;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Optional semantic states (auto-detected in setPill) */
+    #pill.automated {
+      background: rgba(25, 135, 84, 0.92); /* green */
+      border-color: rgba(25, 135, 84, 0.55);
+      color: #ffffff;
+    }
+
+    #pill.edited {
+      background: rgba(255, 193, 7, 0.92); /* amber */
+      border-color: rgba(255, 193, 7, 0.70);
+      color: #1f2d3d; /* dark text on light bg */
+    }
+
+    #pill.error {
+      background: rgba(220, 53, 69, 0.12);
+      border-color: rgba(220, 53, 69, 0.25);
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div id="overlay">
+      <div id="pill">Initializing…</div>
+    </div>
+    <div id="myDiagramDiv"></div>
+  </div>
+
+  <script>
+    // ------------------------------
+    // Plumbing Auto iframe renderer
+    // ------------------------------
+    // Parent ↔ iframe protocol
+    // Parent → iframe:
+    //  - { action: "INIT", apiBaseUrl?, allowCrossOrigin? }
+    //  - { action: "GENERATE", projectNumber?, preferences?, projectData?, content?, requestPayload?, sectorKey? }
+    //  - { action: "SWITCH_SECTOR", sectorKey }
+    //  - { action: "SET_LEGEND_VISIBLE", visible: boolean }
+    //  - { action: "GET_MODEL_JSON" }
+    //  - { action: "SET_MODEL_JSON", modelJson }
+    //  - { action: "ZOOM_TO_FIT" }
+    //  - { action: "SET_EDIT_MODE", enabled: boolean }
+    //  - { action: "UNDO" }
+    //  - { action: "REDO" }
+    //  - { action: "EXPORT_IMAGE_BLOB", format: "png"|"jpeg", background?, scale? }
+    //  - { action: "EXPORT_SVG", background?, scale? }
+    //
+    // Iframe → parent:
+    //  - { action: "READY" }
+    //  - { action: "STATUS", message }
+    //  - { action: "ERROR", message, stack? }
+    //  - { action: "GENERATED", availableSectors, sectorKey, projectNumber? }
+    //  - { action: "MODEL_JSON", modelJson, sectorKey? }
+    //  - { action: "EDIT_MODE_SET", requestId, enabled }
+    //  - { action: "UNDO_RESULT", requestId, didUndo, canUndo, canRedo }
+    //  - { action: "REDO_RESULT", requestId, didRedo, canUndo, canRedo }
+    //  - { action: "EXPORTED_IMAGE_BLOB", requestId, mimeType, bytesBase64, format }
+    //  - { action: "EXPORTED_SVG", requestId, svgString }
+
+    /* global go, AvoidsLinksRouter */
+    let myDiagram;
+    let myRouter; // AvoidsLinksRouter instance
+    let originalRequestPayload = null; // Used for location inference fallback (BBU/shelter)
+    let lastParsedResult = null; // { sectorDiagrams, summary, ... }
+    let currentSectorKey = null;
+    let apiBaseUrl = "http://127.0.0.1:8000";
+    let allowedParentOrigin = null;
+    let allowCrossOrigin = false;
+    const PLUMBING_AUTO_IFRAME_SOURCE = "RFDS_PLUMBING_AUTO_IFRAME";
+
+    // Request sequencing to ignore stale responses
+    let generateSeq = 0;
+
+    // Legend (in-diagram, not HTML overlay)
+    let legendPart = null;
+    let legendVisible = true;
+    const legendState = { kind: null, key: null }; // kind: "band" | "connectionType"
+    const legendItemRefs = []; // { kind, key, rootPanel, accentShape }
+
+    const SECTOR_NAME_MAP = {
+      A: "Alpha",
+      B: "Beta",
+      C: "Gamma",
+      D: "Delta",
+      E: "Epsilon",
+      F: "Zeta",
+      G: "Eta",
+      H: "Theta",
+      I: "Iota",
+      J: "Kappa"
+    };
+
+    const SINGLE_SECTOR_LABEL_KEY = "__SINGLE_SECTOR_LABEL__";
+    const SINGLE_SECTOR_LABEL_Y_GAP = 180;
+
+    function setPill(text, isError) {
+      const pill = document.getElementById("pill");
+      if (!pill) return;
+      pill.textContent = text;
+      // Keep pill readable and allow simple "Automated"/"Edited" styling based on the text.
+      // This is resilient even if the parent sets the label text via postMessage.
+      const t = String(text || "").toLowerCase();
+      if (isError) {
+        pill.className = "error";
+      } else if (t.indexOf("edited") !== -1) {
+        pill.className = "edited";
+      } else if (t.indexOf("automated") !== -1) {
+        pill.className = "automated";
+      } else {
+        pill.className = "";
+      }
+    }
+
+    function postToParent(msg) {
+      try {
+        // If we learned an origin from the parent, target it; otherwise broadcast.
+        const targetOrigin = allowedParentOrigin || "*";
+        window.parent && window.parent.postMessage({ source: PLUMBING_AUTO_IFRAME_SOURCE, ...msg }, targetOrigin);
+      } catch (e) {
+        // Swallow: postMessage failures shouldn't kill the renderer.
+        console.warn("postToParent failed", e);
+      }
+    }
+
+    function status(message) {
+      console.log("[plumbing_iframe] STATUS:", message);
+      setPill(message, false);
+      postToParent({ action: "STATUS", message });
+    }
+
+    function error(message, err) {
+      console.error("[plumbing_iframe] ERROR:", message, err);
+      setPill(message, true);
+      postToParent({
+        action: "ERROR",
+        message: String(message || "Unknown error"),
+        stack: err && err.stack ? String(err.stack) : undefined
+      });
+    }
+
+    function isAllowedMessage(evt) {
+      // We expect same-origin iframe in RFDS. However, for local dev / file://, evt.origin may be "null".
+      if (allowCrossOrigin) return true;
+      if (allowedParentOrigin) return evt.origin === allowedParentOrigin;
+      if (window.location.protocol === "file:" || evt.origin === "null") return true;
+      return evt.origin === window.location.origin;
+    }
+
+    function init() {
+      const $ = go.GraphObject.make;
+
+      myDiagram = new go.Diagram("myDiagramDiv", {
+        "undoManager.isEnabled": true,
+        "layout": $(go.LayeredDigraphLayout, {
+          direction: 90,
+          layerSpacing: 180,
+          columnSpacing: 50,
+          packOption: go.LayeredDigraphLayout.PackExpand,
+          setsPortSpots: false
+        }),
+        "allowMove": true,
+        "allowSelect": true,
+        "allowDragOut": true,
+        "allowDrop": true,
+        "allowLink": true,
+        "allowResize": true
+      });
+
+      myDiagram.model = new go.GraphLinksModel([], []);
+      myDiagram.model.linkFromPortIdProperty = "fromPort";
+      myDiagram.model.linkToPortIdProperty = "toPort";
+      // Ensure undo is enabled even after (future) model swaps.
+      ensureUndoEnabled();
+
+      // Clear legend-based highlights only on true background clicks.
+      // Improved event handling to prevent clearing when clicking on legend
+      myDiagram.addDiagramListener("BackgroundSingleClicked", function(e) {
+        console.log('[iframe] Background click detected - event details:', {
+          subject: !!e.subject,
+          targetObject: !!e.targetObject, 
+          targetPart: !!e.targetPart,
+          targetPartType: e.targetPart ? e.targetPart.constructor.name : 'none'
+        });
+        
+        // Check if click was on the legend part
+        const clickedOnLegend = e.targetPart === legendPart || 
+                               (e.targetPart && e.targetPart.part === legendPart) ||
+                               (e.targetObject && e.targetObject.part === legendPart);
+        
+        // Only clear if this is truly a background click (no target elements) and NOT on legend
+        if (!e.subject && !e.targetObject && !e.targetPart && !clickedOnLegend) {
+          console.log('[iframe] Clearing legend selection on true background click');
+          clearLegendSelection();
+        } else {
+          console.log('[iframe] Not a true background click or clicked on legend - preserving legend selection');
+        }
+      });
+
+      // Prevent clearing legend selection when clicking on diagram objects (nodes, links)
+      myDiagram.addDiagramListener("ObjectSingleClicked", function(e) {
+        console.log('[iframe] Object click detected - preserving legend selection');
+        // Don't clear legend selection when clicking on diagram objects
+        // Just let the legend selection remain as is
+      });
+
+      // Keep legend positioned after each layout completion (prevents legend sitting at 0,0 over the diagram).
+      myDiagram.addDiagramListener("LayoutCompleted", function() {
+        try { scheduleLegendPositioning(); } catch (e) {}
+      });
+
+      // Also reposition legend when diagram bounds or scale changes
+      myDiagram.addDiagramListener("ViewportBoundsChanged", function() {
+        try { 
+          if (legendPositioned && legendPart && legendPart.visible) {
+            scheduleLegendPositioning(); 
+          }
+        } catch (e) {}
+      });
+
+      // Reposition legend when model changes
+      myDiagram.addModelChangedListener(function(evt) {
+        if (evt.isTransactionFinished) {
+          try { scheduleLegendPositioning(); } catch (e) {}
+        }
+      });
+
+      myDiagram.toolManager.linkingTool.isEnabled = true;
+      myDiagram.toolManager.relinkingTool.isEnabled = true;
+      myDiagram.toolManager.linkingTool.direction = go.LinkingTool.Either;
+
+      if (!myRouter) {
+        myRouter = new AvoidsLinksRouter({
+          linkSpacing: 20,
+          avoidsNodes: true,
+          iterations: 2,
+          epsilonDistance: 0.5
+        });
+      }
+      myDiagram.routers.add(myRouter);
+
+      myDiagram.toolManager.linkingTool.isValidLink = function(fromnode, fromport, tonode, toport) {
+        return fromnode !== tonode;
+      };
+
+      myDiagram.toolManager.linkingTool.insertLink = function(fromnode, fromport, tonode, toport) {
+        const newlink = go.LinkingTool.prototype.insertLink.call(this, fromnode, fromport, tonode, toport);
+        if (newlink && fromport && toport) {
+          myDiagram.model.setDataProperty(newlink.data, "fromPort", fromport.portId);
+          myDiagram.model.setDataProperty(newlink.data, "toPort", toport.portId);
+        }
+        return newlink;
+      };
+
+      // Default link template; routing strategy can replace it later.
+      myDiagram.linkTemplate =
+        $(go.Link,
+          {
+            routing: go.Link.AvoidsNodes,
+            corner: 10,
+            curve: go.Link.JumpOver,
+            reshapable: false,
+            resegmentable: false,
+            adjusting: go.Link.End,
+            smoothness: 1.5,
+            curviness: 20,
+            fromSpot: go.Spot.Default,
+            toSpot: go.Spot.Default,
+            mouseEnter: function(e, link) {
+              const shape = link.findObject("LINKSHAPE");
+              if (shape) shape.strokeWidth = Math.max(8, getLinkBaseStrokeWidth(link));
+            },
+            mouseLeave: function(e, link) {
+              const shape = link.findObject("LINKSHAPE");
+              if (shape) shape.strokeWidth = getLinkBaseStrokeWidth(link);
+            }
+          },
+          $(go.Shape,
+            { name: "LINKSHAPE", strokeWidth: 2, stroke: "#333" },
+            new go.Binding("stroke", "color"),
+            new go.Binding("strokeWidth", "thickness", function(t) {
+              const n = Number(t);
+              return (isFinite(n) && n > 0) ? n : 2;
+            })
+          ),
+          $(go.TextBlock,
+            {
+              font: "10px sans-serif",
+              stroke: "black",
+              background: "white",
+              segmentIndex: 0,
+              segmentFraction: 0.5,
+              visible: false
+            },
+            new go.Binding("text", "label"),
+            new go.Binding("visible", "showLabel")
+          )
+        );
+
+      myDiagram.nodeTemplateMap.add("separator",
+        $(go.Node, "Vertical",
+          {
+            movable: false,
+            selectable: false,
+            locationSpot: go.Spot.Center,
+            layerName: "Background",
+            avoidable: false,
+            minSize: new go.Size(0, 0),
+            maxSize: new go.Size(Infinity, 50)
+          },
+          new go.Binding("location", "loc", go.Point.parse),
+          $(go.TextBlock,
+            {
+              text: "Tower",
+              font: "bold 16px sans-serif",
+              stroke: "#000000",
+              background: "transparent",
+              margin: new go.Margin(0, 20, 5, 0),
+              alignment: go.Spot.TopRight,
+              pickable: false
+            }
+          ),
+          $(go.Shape, "LineH",
+            {
+              strokeWidth: 3,
+              stroke: "#000000",
+              strokeDashArray: [12, 8],
+              width: 2000,
+              height: 0,
+              pickable: false
+            },
+            // Allow width override (used by ALL view global separator). Defaults to 2000 for single-sector.
+            new go.Binding("width", "width", function(w) {
+              const n = Number(w);
+              return (isFinite(n) && n > 0) ? n : 2000;
+            })
+          ),
+          $(go.TextBlock,
+            {
+              text: "Shelter",
+              font: "bold 16px sans-serif",
+              stroke: "#000000",
+              background: "transparent",
+              margin: new go.Margin(5, 20, 0, 0),
+              alignment: go.Spot.BottomRight,
+              pickable: false
+            }
+          )
+        )
+      );
+
+      // Sector label (for ALL mode)
+      myDiagram.nodeTemplateMap.add("sectorLabel",
+        $(go.Node, "Spot",
+          {
+            movable: false,
+            selectable: false,
+            pickable: false,
+            isLayoutPositioned: false,
+            locationSpot: go.Spot.Center,
+            layerName: "Foreground",
+            avoidable: false
+          },
+          new go.Binding("location", "loc", go.Point.parse),
+          $(go.Panel, "Auto",
+            $(go.Shape, "RoundedRectangle",
+              {
+                fill: "rgba(255,255,255,0.92)",
+                stroke: "rgba(0,0,0,0.25)",
+                strokeWidth: 1
+              }
+            ),
+            $(go.TextBlock,
+              {
+                margin: new go.Margin(10, 18, 10, 18),
+                font: "bold 32px sans-serif",
+                stroke: "#111",
+                wrap: go.TextBlock.WrapFit,
+                maxLines: 2,
+                textAlign: "center"
+              },
+              new go.Binding("text", "text")
+            )
+          )
+        )
+      );
+
+      // Vertical dotted separator between sectors (for ALL mode)
+      myDiagram.nodeTemplateMap.add("sectorDivider",
+        $(go.Node, "Spot",
+          {
+            movable: false,
+            selectable: false,
+            pickable: false,
+            locationSpot: go.Spot.Center,
+            layerName: "Background",
+            avoidable: false
+          },
+          new go.Binding("location", "loc", go.Point.parse),
+          $(go.Shape, "LineV",
+            {
+              stroke: "rgba(0,0,0,0.65)",
+              strokeWidth: 4,
+              strokeDashArray: [12, 8],
+              width: 2
+            },
+            new go.Binding("height", "height")
+          )
+        )
+      );
+
+      myDiagram.nodeTemplate =
+        $(go.Node, "Spot",
+          {
+            movable: true,
+            selectable: true,
+            locationSpot: go.Spot.Center,
+            dragComputation: function(node, pt, gridpt) {
+              return new go.Point(pt.x, node.location.y);
+            }
+          },
+          new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+          $(go.Panel, "Auto",
+            $(go.Shape, "RoundedRectangle",
+              {
+                name: "NODESHAPE",
+                fill: "#e1f5fe",
+                stroke: "#01579b",
+                strokeWidth: 2,
+                minSize: new go.Size(120, 60)
+              },
+              new go.Binding("fill", "color"),
+              new go.Binding("minSize", "", function(data) {
+                const leftCount = (data.leftArray || []).length;
+                const rightCount = (data.rightArray || []).length;
+                const topCount = (data.topArray || []).length;
+                const bottomCount = (data.bottomArray || []).length;
+
+                const maxHorizontalPorts = Math.max(topCount, bottomCount);
+                const minWidthFromPorts = maxHorizontalPorts > 0 ? maxHorizontalPorts * 26 + 20 : 0;
+                const minWidth = Math.max(120, minWidthFromPorts);
+
+                const maxVerticalPorts = Math.max(leftCount, rightCount);
+                const minHeightFromPorts = maxVerticalPorts > 0 ? maxVerticalPorts * 18 + 20 : 0;
+                const minHeight = Math.max(60, minHeightFromPorts);
+
+                return new go.Size(minWidth, minHeight);
+              })
+            ),
+            $(go.TextBlock,
+              {
+                margin: 10,
+                font: "bold 16px sans-serif",
+                textAlign: "center",
+                wrap: go.TextBlock.WrapFit,
+                maxLines: 3
+              },
+              new go.Binding("text", "name")
+            )
+          ),
+           // Antenna mount position label (e.g. "1L", "1R") shown only for antenna nodes.
+          // NOTE: This must appear AFTER the main "Auto" panel so the Spot panel sizing
+          // is driven by the node body, not the label.
+          $(go.TextBlock,
+            {
+              name: "ANTENNA_POSITION_LABEL",
+              alignment: go.Spot.Top,
+              alignmentFocus: go.Spot.Bottom,
+              font: "bold 12px sans-serif",
+              stroke: "#111",
+              background: "rgba(255,255,255,0.85)",
+              textAlign: "center",
+              margin: new go.Margin(0, 4, 6, 4),
+              visible: false,
+              pickable: false
+            },
+            new go.Binding("text", "", function(d) {
+              const v = (d && (d.position ?? d.antennaPosition ?? d.mountPosition)) ?? "";
+              const pos = String(v || "").trim();
+              return pos ? ("Position " + pos) : "";
+            }),
+            new go.Binding("visible", "", function(d) {
+              if (!d) return false;
+              if (String(d.category || "") !== "antenna") return false;
+              const v = (d.position ?? d.antennaPosition ?? d.mountPosition);
+              return String(v || "").trim().length > 0;
+            })
+          ),
+          $(go.Panel, "Vertical",
+            {
+              alignment: go.Spot.Left,
+              alignmentFocus: go.Spot.Center,
+              margin: new go.Margin(0, 0, 0, -1)
+            },
+            new go.Binding("itemArray", "leftArray"),
+            {
+              itemTemplate:
+                $(go.Panel, "Spot",
+                  {
+                    fromSpot: go.Spot.Left,
+                    toSpot: go.Spot.Left,
+                    fromLinkable: true,
+                    toLinkable: true,
+                    fromLinkableDuplicates: true,
+                    toLinkableDuplicates: true,
+                    fromLinkableSelfNode: false,
+                    toLinkableSelfNode: false,
+                    margin: 2
+                  },
+                  new go.Binding("portId", "portId"),
+                  $(go.Shape, "Rectangle",
+                    {
+                      fill: "white",
+                      stroke: "black",
+                      strokeWidth: 1,
+                      width: 20,
+                      height: 12,
+                      cursor: "pointer"
+                    }
+                  ),
+                  $(go.TextBlock,
+                    {
+                      font: "7px sans-serif",
+                      stroke: "black",
+                      textAlign: "center",
+                      verticalAlignment: go.Spot.Center,
+                      margin: 1,
+                      maxLines: 1,
+                      overflow: go.TextBlock.OverflowEllipsis
+                    },
+                    new go.Binding("text", "", function(data) {
+                      return data.displayLabel || data.label || "";
+                    })
+                  )
+                )
+            }
+          ),
+          $(go.Panel, "Vertical",
+            {
+              alignment: go.Spot.Right,
+              alignmentFocus: go.Spot.Center,
+              margin: new go.Margin(0, -2, 0, 0)
+            },
+            new go.Binding("itemArray", "rightArray"),
+            {
+              itemTemplate:
+                $(go.Panel, "Spot",
+                  {
+                    fromSpot: go.Spot.Right,
+                    toSpot: go.Spot.Right,
+                    fromLinkable: true,
+                    toLinkable: true,
+                    fromLinkableDuplicates: true,
+                    toLinkableDuplicates: true,
+                    fromLinkableSelfNode: false,
+                    toLinkableSelfNode: false,
+                    margin: 2
+                  },
+                  new go.Binding("portId", "portId"),
+                  $(go.Shape, "Rectangle",
+                    {
+                      fill: "white",
+                      stroke: "black",
+                      strokeWidth: 1,
+                      width: 20,
+                      height: 12,
+                      cursor: "pointer"
+                    }
+                  ),
+                  $(go.TextBlock,
+                    {
+                      font: "7px sans-serif",
+                      stroke: "black",
+                      textAlign: "center",
+                      verticalAlignment: go.Spot.Center,
+                      margin: 1,
+                      maxLines: 1,
+                      overflow: go.TextBlock.OverflowEllipsis
+                    },
+                    new go.Binding("text", "", function(data) {
+                      return data.displayLabel || data.label || "";
+                    })
+                  )
+                )
+            }
+          ),
+          $(go.Panel, "Horizontal",
+            {
+              alignment: go.Spot.Top,
+              alignmentFocus: go.Spot.Center,
+              margin: new go.Margin(-1, 0, 0, 0)
+            },
+            new go.Binding("itemArray", "topArray"),
+            {
+              itemTemplate:
+                $(go.Panel, "Spot",
+                  {
+                    fromSpot: go.Spot.Top,
+                    toSpot: go.Spot.Top,
+                    fromLinkable: true,
+                    toLinkable: true,
+                    fromLinkableDuplicates: true,
+                    toLinkableDuplicates: true,
+                    fromLinkableSelfNode: false,
+                    toLinkableSelfNode: false,
+                    margin: 2
+                  },
+                  new go.Binding("portId", "portId"),
+                  $(go.Shape, "Rectangle",
+                    {
+                      fill: "white",
+                      stroke: "black",
+                      strokeWidth: 1,
+                      width: 20,
+                      height: 12,
+                      cursor: "pointer"
+                    }
+                  ),
+                  $(go.TextBlock,
+                    {
+                      font: "7px sans-serif",
+                      stroke: "black",
+                      textAlign: "center",
+                      verticalAlignment: go.Spot.Center,
+                      margin: 1,
+                      maxLines: 1,
+                      overflow: go.TextBlock.OverflowEllipsis
+                    },
+                    new go.Binding("text", "", function(data) {
+                      return data.displayLabel || data.label || "";
+                    })
+                  )
+                )
+            }
+          ),
+          $(go.Panel, "Horizontal",
+            {
+              alignment: go.Spot.Bottom,
+              alignmentFocus: go.Spot.Center,
+              margin: new go.Margin(0, 0, -1, 0)
+            },
+            new go.Binding("itemArray", "bottomArray"),
+            {
+              itemTemplate:
+                $(go.Panel, "Spot",
+                  {
+                    fromSpot: go.Spot.Bottom,
+                    toSpot: go.Spot.Bottom,
+                    fromLinkable: true,
+                    toLinkable: true,
+                    fromLinkableDuplicates: true,
+                    toLinkableDuplicates: true,
+                    fromLinkableSelfNode: false,
+                    toLinkableSelfNode: false,
+                    margin: 2
+                  },
+                  new go.Binding("portId", "portId"),
+                  $(go.Shape, "Rectangle",
+                    {
+                      fill: "white",
+                      stroke: "black",
+                      strokeWidth: 1,
+                      width: 20,
+                      height: 12,
+                      cursor: "pointer"
+                    }
+                  ),
+                  $(go.TextBlock,
+                    {
+                      font: "7px sans-serif",
+                      stroke: "black",
+                      textAlign: "center",
+                      verticalAlignment: go.Spot.Center,
+                      margin: 1,
+                      maxLines: 1,
+                      overflow: go.TextBlock.OverflowEllipsis
+                    },
+                    new go.Binding("text", "", function(data) {
+                      return data.displayLabel || data.label || "";
+                    })
+                  )
+                )
+            }
+          )
+        );
+
+      myDiagram.addDiagramListener("LayoutCompleted", function() {
+        // Order matters:
+        // - Position legend (and reserve right-side fixedBounds) before zoomToFit so the legend never overlaps
+        //   and the documentBounds/fixedBounds are stable for export.
+        try { upsertSingleSectorLabel(currentSectorKey); } catch (e) {}
+        try { scheduleLegendPositioning(); } catch (e) {}
+        try { myDiagram.zoomToFit(); } catch (e) {}
+        try { markExportReadyIfPossible(); } catch (e) {}
+      });
+
+      myDiagram.addDiagramListener("SelectionMoved", function(e) {
+        // Preserve manual horizontal positioning: do not auto-relayout.
+      });
+
+      // Legend Part lives outside the model so it survives model resets.
+      buildLegendPart();
+    }
+
+    // ------------------------------
+    // Legend (in-diagram) + link highlighting
+    // ------------------------------
+
+    // Colors/labels reflect the GoJS "modern legend" used in `rfds/js/rfdsServiceAuto.js` (createBaseTemplateAuto).
+    // NOTE: keys are used for matching; we normalize during matching so spacing/parentheses differences are OK.
+    const LEGEND_FREQUENCY_BANDS = [
+      { key: "700/850 (LB)", label: "700/850 (LB)", color: "black", strokeWidth: 3 },
+      { key: "700 (LT)", label: "700 (LT)", color: "purple", strokeWidth: 3 },
+      { key: "850 (CB)", label: "850 (CB)", color: "red", strokeWidth: 3 },
+      { key: "AWS (AW)", label: "AWS (AW)", color: "brown", strokeWidth: 3 },
+      { key: "PCS (PC)", label: "PCS (PC)", color: "green", strokeWidth: 3 },
+      { key: "AWS/PCS (HB)", label: "AWS/PCS (HB)", color: "blue", strokeWidth: 3 },
+      { key: "28GHz (U28)", label: "28GHz (U28)", color: "#b19cd9", strokeWidth: 3 },
+      { key: "39GHz (U39)", label: "39GHz (U39)", color: "#90ee90", strokeWidth: 3 },
+      { key: "L-Sub6 (S6)", label: "L-Sub6 (S6)", color: "#b5651d", strokeWidth: 3 },
+      { key: "CBRS (RS)", label: "CBRS (RS)", color: "#3498db", strokeWidth: 4 },
+      { key: "LAA (LA)", label: "LAA (LA)", color: "#7f8c8d", strokeWidth: 4 },
+      { key: "Fiber", label: "Fiber", color: "orange", strokeWidth: 3 },
+      { key: "AISG", label: "AISG", color: "#3498db", strokeWidth: 4 },
+      { key: "DC", label: "DC", color: "#e91e63", strokeWidth: 4 }
+    ];
+
+    const LEGEND_CONNECTION_TYPES = [
+      { key: "Coax", label: "Coax" },
+      { key: "Coax Jumper", label: "Coax Jumper" },
+      { key: "Sectors Shared Equipments", label: "Sectors Shared Equipments" },
+      { key: "Enable Terminal Load", label: "Enable Terminal Load" }
+    ];
+
+    function normalizeLegendKey(s) {
+      return String(s || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .replace(/[()]/g, "")
+        .replace(/[-_]/g, "");
+    }
+
+    function normalizeColorString(s) {
+      return String(s || "").trim().toLowerCase();
+    }
+
+    function getSelectedBandColorByKey(bandKey) {
+      const target = normalizeLegendKey(bandKey);
+      if (!target) return null;
+      for (const b of LEGEND_FREQUENCY_BANDS) {
+        if (normalizeLegendKey(b.key) === target) return b.color;
+      }
+      return null;
+    }
+
+    function getLinkBaseStrokeWidth(link) {
+      const t = Number(link && link.data ? link.data.thickness : 2);
+      const base = (isFinite(t) && t > 0) ? t : 2;
+      if (link && link.isHighlighted) return Math.max(base + 4, 6);
+      return base;
+    }
+
+    function clearLegendSelection() {
+      if (!myDiagram) return;
+      console.log('[iframe] clearLegendSelection called');
+      legendState.kind = null;
+      legendState.key = null;
+      updateLegendSelectionUI();
+      updateLegendHighlights();
+    }
+
+    function setLegendSelection(kind, key) {
+      if (!myDiagram) return;
+      console.log(`[iframe] setLegendSelection called: ${kind}, ${key}`);
+      const k = String(key || "");
+      const isSame = legendState.kind === kind && legendState.key === k;
+      legendState.kind = isSame ? null : kind;
+      legendState.key = isSame ? null : k;
+      console.log(`[iframe] Legend state updated: kind=${legendState.kind}, key=${legendState.key}`);
+      updateLegendSelectionUI();
+      updateLegendHighlights();
+    }
+
+    function updateLegendSelectionUI() {
+      const selectedKind = legendState.kind;
+      const selectedKey = legendState.key;
+      for (const ref of legendItemRefs) {
+        const isSelected = !!selectedKind && !!selectedKey && ref.kind === selectedKind && ref.key === selectedKey;
+        if (ref.rootPanel) ref.rootPanel.background = isSelected ? "rgba(205,4,11,0.10)" : "transparent";
+        if (ref.accentShape) {
+          ref.accentShape.stroke = isSelected ? "#CD040B" : "rgba(0,0,0,0.15)";
+          ref.accentShape.strokeWidth = isSelected ? 2 : 1;
+        }
+      }
+    }
+
+    function isBandMatchForLink(link, legendKey, legendColor) {
+      if (!link || !link.data) return false;
+      const target = normalizeLegendKey(legendKey);
+      if (!target) return false;
+
+      const sb = normalizeLegendKey(link.data.sourceBand);
+      const tb = normalizeLegendKey(link.data.targetBand);
+      if (sb && (sb === target || sb.indexOf(target) !== -1 || target.indexOf(sb) !== -1)) return true;
+      if (tb && (tb === target || tb.indexOf(target) !== -1 || target.indexOf(tb) !== -1)) return true;
+
+      // Fallback: match by color when bands are missing/blank.
+      const lc = normalizeColorString(legendColor);
+      const dc = normalizeColorString(link.data.color);
+      if (lc && dc && dc === lc) return true;
+
+      return false;
+    }
+
+    function isConnectionTypeMatchForLink(link, legendKey) {
+      if (!link || !link.data) return false;
+      const target = normalizeLegendKey(legendKey);
+      if (!target) return false;
+      const ct = normalizeLegendKey(link.data.connectionType);
+      if (!ct) return false;
+      return ct === target || ct.indexOf(target) !== -1 || target.indexOf(ct) !== -1;
+    }
+
+    function updateLegendHighlights() {
+      // Link highlighting functionality has been removed.
+      // Legend selection is now purely for visual feedback on the legend itself.
+      if (!myDiagram) return;
+      console.log(`[iframe] updateLegendHighlights: link highlighting disabled`);
+    }
+
+    function computeContentBoundsExcludingLegend() {
+      if (!myDiagram) return null;
+      if (!legendPart) return myDiagram.documentBounds;
+      
+      // Calculate bounds that include the full visual extent of nodes (including ports)
+      let minX = Number.MAX_VALUE;
+      let maxX = Number.MIN_VALUE;
+      let minY = Number.MAX_VALUE;
+      let maxY = Number.MIN_VALUE;
+      let hasContent = false;
+
+      myDiagram.nodes.each(function(node) {
+        if (node === legendPart) return; // Skip the legend itself
+        
+        // Ensure node bounds are calculated
+        node.ensureBounds();
+        const nodeBounds = node.actualBounds;
+        
+        if (nodeBounds && isFinite(nodeBounds.x) && isFinite(nodeBounds.y) && 
+            isFinite(nodeBounds.width) && isFinite(nodeBounds.height)) {
+          
+          // Add extra padding for ports that extend beyond the node visual bounds
+          // Ports are typically 20px wide and positioned slightly outside the node
+          const portPadding = 25; // Extra padding to account for port visual extent
+          
+          minX = Math.min(minX, nodeBounds.x - portPadding);
+          maxX = Math.max(maxX, nodeBounds.x + nodeBounds.width + portPadding);
+          minY = Math.min(minY, nodeBounds.y - portPadding);
+          maxY = Math.max(maxY, nodeBounds.y + nodeBounds.height + portPadding);
+          hasContent = true;
+        }
+      });
+
+      // Also include links in the bounds calculation
+      myDiagram.links.each(function(link) {
+        if (!link) return;
+        
+        link.ensureBounds();
+        const linkBounds = link.actualBounds;
+        
+        if (linkBounds && isFinite(linkBounds.x) && isFinite(linkBounds.y) && 
+            isFinite(linkBounds.width) && isFinite(linkBounds.height)) {
+          minX = Math.min(minX, linkBounds.x);
+          maxX = Math.max(maxX, linkBounds.x + linkBounds.width);
+          minY = Math.min(minY, linkBounds.y);
+          maxY = Math.max(maxY, linkBounds.y + linkBounds.height);
+          hasContent = true;
+        }
+      });
+
+      // Include other parts (separators, labels, etc.) but exclude legend
+      myDiagram.parts.each(function(part) {
+        if (part === legendPart) return; // Skip the legend itself
+        
+        part.ensureBounds();
+        const partBounds = part.actualBounds;
+        
+        if (partBounds && isFinite(partBounds.x) && isFinite(partBounds.y) && 
+            isFinite(partBounds.width) && isFinite(partBounds.height)) {
+          minX = Math.min(minX, partBounds.x);
+          maxX = Math.max(maxX, partBounds.x + partBounds.width);
+          minY = Math.min(minY, partBounds.y);
+          maxY = Math.max(maxY, partBounds.y + partBounds.height);
+          hasContent = true;
+        }
+      });
+
+      if (!hasContent) {
+        return null;
+      }
+
+      const bounds = new go.Rect(minX, minY, maxX - minX, maxY - minY);
+      console.log(`[iframe] Content bounds (with port padding): ${bounds.width}x${bounds.height} at (${bounds.x}, ${bounds.y})`);
+      return bounds;
+    }
+
+    function positionLegendPart() {
+      if (!myDiagram || !legendPart || !legendPart.visible) return;
+      myDiagram.invalidateDocumentBounds();
+      const b = computeContentBoundsExcludingLegend();
+      
+      // If no content bounds yet, position legend far to the right to avoid overlap
+      if (!b || !isFinite(b.width) || !isFinite(b.height) || b.width <= 0 || b.height <= 0) {
+        // Position legend at a safe location far right to avoid overlapping with content being loaded
+        legendPart.location = new go.Point(1200, 50);
+        return;
+      }
+
+      // Reserve a "sidebar" area to the right of the content and place the legend inside it.
+      // This prevents the legend from overlapping the diagram content, while keeping it in-diagram for exports.
+      legendPart.ensureBounds();
+      const lb = legendPart.actualBounds;
+      if (!lb || !isFinite(lb.width) || !isFinite(lb.height) || lb.width <= 0 || lb.height <= 0) return;
+
+      // Increased margin to ensure proper separation from rightmost nodes with ports
+      const margin = 60; // Increased from 40 to provide more buffer
+      const sidebarPad = 20;
+      const fixedW = b.width + margin + lb.width + sidebarPad;
+      const fixedH = Math.max(b.height, lb.height);
+
+      // fixedBounds defines the scrollable/document region even if the layout doesn't naturally create space.
+      myDiagram.fixedBounds = new go.Rect(b.x, b.y, fixedW, fixedH);
+
+      // Place legend at the top of the reserved right area with additional clearance
+      const legendX = b.x + b.width + margin;
+      const legendY = Math.max(b.y, 50); // Ensure minimum top padding
+      legendPart.location = new go.Point(legendX, legendY);
+
+      // Mark that the legend has been positioned and fixedBounds reserved.
+      legendPositioned = true;
+      console.log(`[iframe] Legend positioned at (${legendX}, ${legendY}), content bounds: ${b.width}x${b.height}, rightmost content at: ${b.x + b.width}`);
+      
+      // Ensure documentBounds sees the latest legend/fixedBounds changes before export.
+      try { myDiagram.invalidateDocumentBounds(); } catch (e) {}
+      try { myDiagram.requestUpdate(); } catch (e) {}
+      try { markExportReadyIfPossible(); } catch (e) {}
+    }
+
+    function scheduleLegendPositioning() {
+      if (!myDiagram) return;
+      // Layout/model updates can take multiple ticks; keep trying briefly until bounds are valid.
+      const maxAttempts = 30; // Increased attempts
+      const delayMs = 100; // Reduced delay for faster positioning
+      let attempts = 0;
+
+      const attempt = () => {
+        attempts++;
+        try {
+          if (!myDiagram || !legendPart || !legendPart.visible) return;
+          myDiagram.invalidateDocumentBounds();
+          
+          // Always try positioning even if bounds aren't perfect yet
+          positionLegendPart();
+          
+          // Check if positioning was successful
+          const b = computeContentBoundsExcludingLegend();
+          const hasValidBounds = !!(b && isFinite(b.width) && isFinite(b.height) && b.width > 0 && b.height > 0);
+          
+          if (hasValidBounds && legendPositioned) {
+            console.log(`[iframe] Legend positioning completed after ${attempts} attempts`);
+            try { markExportReadyIfPossible(); } catch (e) {}
+            return;
+          }
+        } catch (e) {
+          console.warn(`[iframe] Legend positioning attempt ${attempts} failed:`, e);
+        }
+
+        if (attempts < maxAttempts) {
+          setTimeout(attempt, delayMs);
+        } else {
+          console.warn(`[iframe] Legend positioning exhausted ${maxAttempts} attempts, positioning legend at safe fallback location`);
+          // Final fallback: ensure legend is positioned somewhere safe
+          if (legendPart) {
+            legendPart.location = new go.Point(1200, 50);
+            legendPositioned = true;
+            try { markExportReadyIfPossible(); } catch (e) {}
+          }
+        }
+      };
+
+      setTimeout(attempt, 0);
+    }
+
+    function setLegendVisible(visible) {
+      legendVisible = !!visible;
+      if (!myDiagram || !legendPart) return;
+      
+      legendPart.visible = legendVisible;
+      
+      // If hidden, release reserved bounds so zoom/fit behaves normally.
+      if (!legendVisible) {
+        try { myDiagram.fixedBounds = null; } catch (e) {}
+        legendPositioned = false;
+      }
+      // If showing, we must re-position and re-reserve bounds.
+      if (legendVisible) {
+        legendPositioned = false;
+        // Position immediately to avoid flash at 0,0
+        if (!legendPositioned) {
+          legendPart.location = new go.Point(1200, 50);
+        }
+        // Then schedule proper positioning
+        scheduleLegendPositioning();
+      }
+    }
+
+    function buildLegendPart() {
+      if (!myDiagram || legendPart) return;
+      const $ = go.GraphObject.make;
+
+      legendItemRefs.length = 0;
+
+      // "Modern legend" visuals (ported from rfdsServiceAuto.js createBaseTemplateAuto),
+      // but scaled down to work well as a right-side sidebar legend in the iframe.
+      const LEGEND_WIDTH = 320;
+      const SECTION_HEADER_H = 36;
+
+      function registerSelectableRow(kind, key, rootPanel, accentShape) {
+        legendItemRefs.push({ kind, key, rootPanel, accentShape });
+      }
+
+      function makeModernBandRow(kind, key, label, color, strokeWidth) {
+        const accent = $(go.Shape, "RoundedRectangle", {
+          fill: "white",
+          stroke: "rgba(176,190,197,1)",
+          strokeWidth: 1,
+          parameter1: 6
+        });
+
+        const line = $(go.Shape, "Rectangle", {
+          stroke: color,
+          strokeWidth: (typeof strokeWidth === "number" && isFinite(strokeWidth) && strokeWidth > 0) ? strokeWidth : 3,
+          fill: "transparent",
+          desiredSize: new go.Size(44, 0),
+          height: 0
+        });
+
+        const swatchCard =
+          $(go.Panel, "Auto",
+            { margin: new go.Margin(0, 10, 0, 0), width: 60, height: 18 },
+            accent,
+            $(go.Panel, "Spot",
+              { stretch: go.GraphObject.Fill },
+              $(go.Shape, "LineH", { stroke: "transparent" }), // placeholder to keep panel sized
+              $(go.Panel, "Auto",
+                { alignment: go.Spot.Center },
+                $(go.Shape, "Rectangle", { fill: "transparent", stroke: "transparent" }),
+                $(go.Shape, "LineH", { stroke: color, strokeWidth: line.strokeWidth, width: 44, height: 0 })
+              )
+            )
+          );
+
+        const row =
+          $(go.Panel, "Horizontal",
+            {
+              background: "transparent",
+              cursor: "pointer",
+              click: function(e, obj) { 
+                console.log(`[iframe] Legend band clicked: ${key}`);
+                e.handled = true; 
+                setLegendSelection(kind, key); 
+              },
+              mouseEnter: function(e, obj) {
+                if (legendState.kind === kind && normalizeLegendKey(legendState.key) === normalizeLegendKey(key)) return;
+                obj.background = "rgba(0,0,0,0.04)";
+              },
+              mouseLeave: function(e, obj) {
+                if (legendState.kind === kind && normalizeLegendKey(legendState.key) === normalizeLegendKey(key)) return;
+                obj.background = "transparent";
+              },
+              stretch: go.GraphObject.Horizontal,
+              margin: new go.Margin(3, 0, 3, 0)
+            },
+            swatchCard,
+            $(go.TextBlock,
+              {
+                stroke: "#334e68",
+                font: "600 12px 'Segoe UI', Arial, sans-serif"
+              },
+              label
+            )
+          );
+
+        registerSelectableRow(kind, key, row, accent);
+        return row;
+      }
+
+      function makeModernTypeRow(kind, key, label, fill, stroke) {
+        const accent = $(go.Shape, "RoundedRectangle", {
+          fill: "white",
+          stroke: "rgba(176,190,197,1)",
+          strokeWidth: 1,
+          parameter1: 6
+        });
+
+        const box =
+          $(go.Shape, "RoundedRectangle", {
+            width: 14,
+            height: 14,
+            fill: fill,
+            stroke: stroke,
+            strokeWidth: 2,
+            parameter1: 2
+          });
+
+        const row =
+          $(go.Panel, "Horizontal",
+            {
+              background: "transparent",
+              cursor: "pointer",
+              click: function(e, obj) { 
+                console.log(`[iframe] Legend type clicked: ${key}`);
+                e.handled = true; 
+                setLegendSelection(kind, key); 
+              },
+              mouseEnter: function(e, obj) {
+                if (legendState.kind === kind && normalizeLegendKey(legendState.key) === normalizeLegendKey(key)) return;
+                obj.background = "rgba(0,0,0,0.04)";
+              },
+              mouseLeave: function(e, obj) {
+                if (legendState.kind === kind && normalizeLegendKey(legendState.key) === normalizeLegendKey(key)) return;
+                obj.background = "transparent";
+              },
+              stretch: go.GraphObject.Horizontal,
+              margin: new go.Margin(3, 0, 3, 0)
+            },
+            $(go.Panel, "Auto",
+              { margin: new go.Margin(0, 10, 0, 0), width: 60, height: 18 },
+              accent,
+              $(go.Panel, "Spot",
+                { stretch: go.GraphObject.Fill },
+                box
+              )
+            ),
+            $(go.TextBlock,
+              {
+                stroke: "#334e68",
+                font: "600 12px 'Segoe UI', Arial, sans-serif"
+              },
+              label
+            )
+          );
+
+        registerSelectableRow(kind, key, row, accent);
+        return row;
+      }
+
+      function makeSectionHeader(text) {
+        return $(go.Panel, "Auto",
+          { margin: new go.Margin(10, 0, 8, 0), stretch: go.GraphObject.Horizontal, height: SECTION_HEADER_H },
+          $(go.Shape, "RoundedRectangle", {
+            fill: "#334e68",
+            stroke: "#243b53",
+            strokeWidth: 1,
+            parameter1: 8
+          }),
+          $(go.TextBlock, {
+            text: text,
+            stroke: "white",
+            font: "700 12px 'Segoe UI', Arial, sans-serif",
+            margin: new go.Margin(5, 10, 5, 10)
+          })
+        );
+      }
+
+      const header =
+        $(go.Panel, "Auto",
+          { stretch: go.GraphObject.Horizontal },
+          $(go.Shape, "RoundedRectangle", {
+            fill: $(go.Brush, "Linear", { 0: "#0d3b66", 1: "#1a5490" }),
+            stroke: "#0a2540",
+            strokeWidth: 1,
+            parameter1: 10
+          }),
+          $(go.Panel, "Vertical",
+            { margin: 10, stretch: go.GraphObject.Horizontal },
+            $(go.TextBlock, {
+              text: "LEGENDS",
+              stroke: "white",
+              font: "800 14px 'Segoe UI', Arial, sans-serif",
+              margin: new go.Margin(0, 0, 8, 0)
+            }),
+            $(go.Panel, "Horizontal",
+              { alignment: go.Spot.Left },
+              $(go.Shape, "RoundedRectangle", {
+                fill: "#2ecc71",
+                stroke: "#27ae60",
+                strokeWidth: 1,
+                desiredSize: new go.Size(14, 14),
+                parameter1: 4,
+                margin: new go.Margin(0, 8, 0, 0)
+              }),
+              $(go.TextBlock, {
+                text: "RET DC Signal Capable Port",
+                stroke: "white",
+                font: "600 12px 'Segoe UI', Arial, sans-serif"
+              })
+            )
+          )
+        );
+
+      const bandsPanel = $(go.Panel, "Vertical", { stretch: go.GraphObject.Horizontal });
+      for (const b of LEGEND_FREQUENCY_BANDS) {
+        bandsPanel.add(makeModernBandRow("band", b.key, b.label, b.color, b.strokeWidth));
+      }
+
+      const typesPanel = $(go.Panel, "Vertical", { stretch: go.GraphObject.Horizontal });
+      for (const t of LEGEND_CONNECTION_TYPES) {
+        const norm = normalizeLegendKey(t.key);
+        if (norm === normalizeLegendKey("Coax")) typesPanel.add(makeModernTypeRow("connectionType", t.key, t.label, "transparent", "blue"));
+        else if (norm === normalizeLegendKey("CoaxJumper")) typesPanel.add(makeModernTypeRow("connectionType", t.key, t.label, "blue", "blue"));
+        else if (norm.indexOf(normalizeLegendKey("SectorsShared")) !== -1) typesPanel.add(makeModernTypeRow("connectionType", t.key, t.label, "#00d9ff", "#00b8d4"));
+        else if (norm.indexOf(normalizeLegendKey("EnableTerminalLoad")) !== -1) typesPanel.add(makeModernTypeRow("connectionType", t.key, t.label, "white", "#e74c3c"));
+        else typesPanel.add(makeModernTypeRow("connectionType", t.key, t.label, "transparent", "#334e68"));
+      }
+
+      const notesCard =
+        $(go.Panel, "Auto",
+          { margin: new go.Margin(12, 0, 0, 0), stretch: go.GraphObject.Horizontal },
+          $(go.Shape, "RoundedRectangle", {
+            fill: $(go.Brush, "Linear", { 0: "#e3f2fd", 1: "#90caf9" }),
+            stroke: "#1976d2",
+            strokeWidth: 1,
+            parameter1: 10
+          }),
+          $(go.Panel, "Vertical",
+            { margin: 10, stretch: go.GraphObject.Horizontal },
+            $(go.TextBlock, {
+              text: "NOTES",
+              stroke: "#0d47a1",
+              font: "800 13px 'Segoe UI', Arial, sans-serif",
+              margin: new go.Margin(0, 0, 6, 0)
+            }),
+            $(go.TextBlock, {
+              text:
+                "• Antenna view is from the back of the antennas\n" +
+                "• Colors of connections are for clarification only\n" +
+                "• Object sizes in drawing do not reflect true dimensions",
+              stroke: "#334e68",
+              font: "12px 'Segoe UI', Arial, sans-serif",
+              wrap: go.TextBlock.WrapFit,
+              width: LEGEND_WIDTH - 40
+            })
+          )
+        );
+
+      legendPart =
+        $(go.Part, "Auto",
+          {
+            layerName: "Foreground",
+            selectable: false,
+            movable: false,
+            pickable: true,
+            locationSpot: go.Spot.TopLeft,
+            location: new go.Point(1200, 50), // Start positioned far right to avoid initial overlap
+            visible: legendVisible
+          },
+          $(go.Shape, "RoundedRectangle",
+            {
+              fill: $(go.Brush, "Linear", { 0: "#f0f4f8", 1: "#d9e2ec" }),
+              stroke: "#334e68",
+              strokeWidth: 1,
+              parameter1: 12
+            }
+          ),
+          $(go.Panel, "Vertical",
+            { margin: 10, width: LEGEND_WIDTH, stretch: go.GraphObject.Horizontal },
+            header,
+            makeSectionHeader("FREQUENCY BANDS"),
+            bandsPanel,
+            makeSectionHeader("CONNECTION TYPES"),
+            typesPanel,
+            notesCard
+          )
+        );
+
+      myDiagram.add(legendPart);
+      updateLegendSelectionUI();
+      updateLegendHighlights();
+      
+      // Immediate positioning attempt
+      try {
+        positionLegendPart();
+      } catch (e) {
+        console.warn('[iframe] Immediate legend positioning failed, will retry:', e);
+      }
+      
+      // Schedule positioning with retry logic
+      scheduleLegendPositioning();
+      
+      // Also schedule additional positioning after a longer delay as fallback
+      setTimeout(() => {
+        try {
+          if (!legendPositioned) {
+            console.log('[iframe] Fallback legend positioning attempt');
+            scheduleLegendPositioning();
+          }
+        } catch (e) {}
+      }, 1000);
+    }
+
+    // ------------------------------
+    // Editing / undo / export helpers
+    // ------------------------------
+    let _diagramEditDefaults = null;
+
+    // GoJS note:
+    // Assigning a new model (`myDiagram.model = ...`) resets undo enablement because a new Model's UndoManager
+    // defaults to disabled. This breaks UNDO/REDO in iframe edit mode unless we re-enable it after each swap.
+    function ensureUndoEnabled() {
+      try {
+        if (myDiagram && myDiagram.undoManager) myDiagram.undoManager.isEnabled = true;
+      } catch (e) {}
+      try {
+        if (myDiagram && myDiagram.model && myDiagram.model.undoManager) {
+          myDiagram.model.undoManager.isEnabled = true;
+        }
+      } catch (e) {}
+    }
+
+    // Export readiness gate:
+    // In this iframe, the legend part exists immediately (outside the model), while the main diagram content
+    // is loaded + laid out asynchronously (multiple setTimeouts). If we export too early we can end up
+    // exporting only the legend. We gate exports on "non-zero documentBounds with real model content".
+    let exportReady = false;
+    let legendPositioned = false;
+    const exportReadyWaiters = [];
+
+    function markExportReadyIfPossible() {
+      if (!myDiagram || !myDiagram.model) return;
+      const nodes = myDiagram.model.nodeDataArray || [];
+      if (!nodes.length) return;
+
+      // If the legend is visible, require legend positioning before allowing export.
+      // This guarantees fixedBounds is reserved and documentBounds include the legend sidebar region.
+      if (legendVisible && legendPart && legendPart.visible && !legendPositioned) return;
+
+      myDiagram.invalidateDocumentBounds();
+      const b = myDiagram.documentBounds;
+      if (!b || !isFinite(b.width) || !isFinite(b.height) || b.width <= 0 || b.height <= 0) return;
+
+      exportReady = true;
+      while (exportReadyWaiters.length) {
+        const fn = exportReadyWaiters.shift();
+        try { fn(); } catch (e) {}
+      }
+    }
+
+    function resetExportReady() {
+      exportReady = false;
+      legendPositioned = false;
+      // Do not clear waiters: they should resolve when ready or timeout.
+      // (Clearing could hang parent-side downloads.)
+    }
+
+    function waitForExportReady(timeoutMs) {
+      // Large ALL-sector diagrams can take a while to layout+route; be patient by default.
+      const ms = (typeof timeoutMs === "number" && isFinite(timeoutMs) && timeoutMs > 0) ? timeoutMs : 60000;
+      if (exportReady) return Promise.resolve();
+
+      return new Promise((resolve) => {
+        let done = false;
+        const t = setTimeout(() => {
+          if (done) return;
+          done = true;
+          // Best-effort fallback: do not block forever, but try to make bounds stable before export.
+          try { positionLegendPart(); } catch (e) {}
+          try { myDiagram && myDiagram.invalidateDocumentBounds(); } catch (e) {}
+          resolve();
+        }, ms);
+
+        exportReadyWaiters.push(() => {
+          if (done) return;
+          done = true;
+          clearTimeout(t);
+          resolve();
+        });
+      });
+    }
+
+    function applyEditMode(enabled) {
+      if (!myDiagram) throw new Error("Diagram not initialized");
+      const on = !!enabled;
+
+      // Cache original per-diagram edit flags once.
+      if (!_diagramEditDefaults) {
+        _diagramEditDefaults = {
+          allowMove: !!myDiagram.allowMove,
+          allowSelect: !!myDiagram.allowSelect,
+          allowDragOut: !!myDiagram.allowDragOut,
+          allowDrop: !!myDiagram.allowDrop,
+          allowLink: !!myDiagram.allowLink,
+          allowResize: !!myDiagram.allowResize,
+          linkingToolEnabled: !!(myDiagram.toolManager && myDiagram.toolManager.linkingTool && myDiagram.toolManager.linkingTool.isEnabled),
+          relinkingToolEnabled: !!(myDiagram.toolManager && myDiagram.toolManager.relinkingTool && myDiagram.toolManager.relinkingTool.isEnabled)
+        };
+      }
+
+      // GoJS: isReadOnly disables user tools; programmatic model updates still work.
+      myDiagram.isReadOnly = !on;
+      myDiagram.allowMove = on ? _diagramEditDefaults.allowMove : false;
+      myDiagram.allowSelect = on ? _diagramEditDefaults.allowSelect : true; // allow select in view mode for UX
+      myDiagram.allowDragOut = on ? _diagramEditDefaults.allowDragOut : false;
+      myDiagram.allowDrop = on ? _diagramEditDefaults.allowDrop : false;
+      myDiagram.allowLink = on ? _diagramEditDefaults.allowLink : false;
+      myDiagram.allowResize = on ? _diagramEditDefaults.allowResize : false;
+
+      if (myDiagram.toolManager && myDiagram.toolManager.linkingTool) {
+        myDiagram.toolManager.linkingTool.isEnabled = on ? _diagramEditDefaults.linkingToolEnabled : false;
+      }
+      if (myDiagram.toolManager && myDiagram.toolManager.relinkingTool) {
+        myDiagram.toolManager.relinkingTool.isEnabled = on ? _diagramEditDefaults.relinkingToolEnabled : false;
+      }
+    }
+
+    function safeUndo() {
+      if (!myDiagram) throw new Error("Diagram not initialized");
+      const um = myDiagram.undoManager;
+      if (!um) return { didUndo: false, canUndo: false, canRedo: false };
+      if (um.canUndo()) {
+        um.undo();
+        return { didUndo: true, canUndo: um.canUndo(), canRedo: um.canRedo() };
+      }
+      return { didUndo: false, canUndo: um.canUndo(), canRedo: um.canRedo() };
+    }
+
+    function safeRedo() {
+      if (!myDiagram) throw new Error("Diagram not initialized");
+      const um = myDiagram.undoManager;
+      if (!um) return { didRedo: false, canUndo: false, canRedo: false };
+      if (um.canRedo()) {
+        um.redo();
+        return { didRedo: true, canUndo: um.canUndo(), canRedo: um.canRedo() };
+      }
+      return { didRedo: false, canUndo: um.canUndo(), canRedo: um.canRedo() };
+    }
+
+    function exportImageDataUrl(opts) {
+      if (!myDiagram) throw new Error("Diagram not initialized");
+      const format = (opts && opts.format === "jpeg") ? "jpeg" : "png";
+      const mimeType = format === "jpeg" ? "image/jpeg" : "image/png";
+      // IMPORTANT:
+      // - If scale is omitted, GoJS defaults to `diagram.scale` (current zoom), which makes exports viewport/zoom dependent.
+      // - We want deterministic exports, so default to a fixed scale.
+      const DEFAULT_EXPORT_SCALE = 2;
+      const requestedScale = (opts && typeof opts.scale === "number" && isFinite(opts.scale) && opts.scale > 0)
+        ? opts.scale
+        : DEFAULT_EXPORT_SCALE;
+      const background = (opts && typeof opts.background === "string") ? opts.background : undefined;
+
+      // Export the full diagram, not just the current viewport.
+      // By omitting `position`/`size`, GoJS exports the full documentBounds automatically (zoom/pan independent).
+      // Best-effort: ensure legend is placed and fixedBounds reserved before measurement/export.
+      try { positionLegendPart(); } catch (e) {}
+      myDiagram.invalidateDocumentBounds();
+      const b = myDiagram.documentBounds;
+      const pad = 20; // used only for scale calculation (optional breathing room)
+      const exportBounds = (b && isFinite(b.width) && isFinite(b.height) && b.width > 0 && b.height > 0)
+        ? new go.Rect(b.x - pad, b.y - pad, b.width + (pad * 2), b.height + (pad * 2))
+        : null;
+
+      // Prevent partial/cropped exports on huge diagrams by clamping the output pixel size.
+      // Browsers/GPU drivers have max canvas dimensions; exceeding them can silently truncate output.
+      // Keep the payload reasonably sized for postMessage (base64) and avoid GPU/canvas limits.
+      // Full diagram will still be included; scale is clamped down as needed.
+      const MAX_SIDE_PX = 8192;        // conservative cross-browser max dimension (faster + safer)
+      const MAX_AREA_PX = 25_000_000;  // ~25 MP cap to avoid huge base64 messages/timeouts
+
+      let scale = requestedScale;
+      if (exportBounds) {
+        const w = exportBounds.width;
+        const h = exportBounds.height;
+        if (isFinite(w) && isFinite(h) && w > 0 && h > 0) {
+          const capBySide = Math.min(MAX_SIDE_PX / w, MAX_SIDE_PX / h);
+          const capByArea = Math.sqrt(MAX_AREA_PX / (w * h));
+          // Never increase scale here; only reduce to satisfy caps.
+          scale = Math.min(scale, capBySide, capByArea);
+          if (!isFinite(scale) || scale <= 0) scale = 0.1;
+        }
+      }
+
+      // GoJS returns a data URL string by default. We stick to data URLs to keep this portable.
+      const dataUrl = myDiagram.makeImageData({
+        type: mimeType,
+        scale: scale,
+        background: background,
+        maxSize: new go.Size(MAX_SIDE_PX, MAX_SIDE_PX)
+      });
+
+      if (typeof dataUrl !== "string" || dataUrl.indexOf("data:") !== 0) {
+        throw new Error("Failed to export image data URL");
+      }
+      return { dataUrl, mimeType, format };
+    }
+
+    function dataUrlToBase64(dataUrl) {
+      const comma = dataUrl.indexOf(",");
+      if (comma === -1) throw new Error("Invalid data URL");
+      return dataUrl.slice(comma + 1);
+    }
+
+    function exportSvgString(opts) {
+      if (!myDiagram) throw new Error("Diagram not initialized");
+      if (typeof myDiagram.makeSvg !== "function") throw new Error("SVG export not supported by this GoJS build");
+      const DEFAULT_EXPORT_SCALE = 2;
+      const requestedScale = (opts && typeof opts.scale === "number" && isFinite(opts.scale) && opts.scale > 0)
+        ? opts.scale
+        : DEFAULT_EXPORT_SCALE;
+      const background = (opts && typeof opts.background === "string") ? opts.background : undefined;
+
+      try { positionLegendPart(); } catch (e) {}
+      myDiagram.invalidateDocumentBounds();
+      const b = myDiagram.documentBounds;
+      const pad = 20;
+      const exportBounds = (b && isFinite(b.width) && isFinite(b.height) && b.width > 0 && b.height > 0)
+        ? new go.Rect(b.x - pad, b.y - pad, b.width + (pad * 2), b.height + (pad * 2))
+        : null;
+
+      const MAX_SIDE_PX = 8192;
+      const MAX_AREA_PX = 25_000_000;
+      let scale = requestedScale;
+      if (exportBounds) {
+        const w = exportBounds.width;
+        const h = exportBounds.height;
+        if (isFinite(w) && isFinite(h) && w > 0 && h > 0) {
+          const capBySide = Math.min(MAX_SIDE_PX / w, MAX_SIDE_PX / h);
+          const capByArea = Math.sqrt(MAX_AREA_PX / (w * h));
+          scale = Math.min(scale, capBySide, capByArea);
+          if (!isFinite(scale) || scale <= 0) scale = 0.1;
+        }
+      }
+
+      const svg = myDiagram.makeSvg({
+        scale: scale,
+        background: background,
+        position: exportBounds ? exportBounds.position : undefined,
+        size: exportBounds ? exportBounds.size : undefined
+      });
+      if (!svg) throw new Error("Failed to export SVG");
+      return new XMLSerializer().serializeToString(svg);
+    }
+
+    // ------------------------------
+    // Layout / routing logic (ported)
+    // ------------------------------
+    function enforceAntennaBottomLayer() {
+      if (!myDiagram || !myDiagram.model) return;
+
+      const shelterNodes = [];
+      const towerNodes = [];
+      const antennaNodes = [];
+      const separatorNodes = [];
+
+      myDiagram.nodes.each(function(node) {
+        if (node.data.category === "separator") separatorNodes.push(node);
+        else if (node.data.category === "antenna") antennaNodes.push(node);
+        else if (node.data.location === "shelter") shelterNodes.push(node);
+        else towerNodes.push(node);
+      });
+
+      myDiagram.startTransaction("enforce location-based hierarchy");
+      try {
+        let currentLayer = 0;
+
+        if (shelterNodes.length > 0) {
+          shelterNodes.forEach((node) => {
+            myDiagram.model.setDataProperty(node.data, "layer", currentLayer);
+          });
+          currentLayer++;
+        }
+
+        if (towerNodes.length > 0) {
+          const sortedTowerNodes = towerNodes.sort((a, b) => {
+            const categoryOrder = { "filter": 0, "radio": 1, "other": 2 };
+            const aCat = categoryOrder[a.data.category] || categoryOrder.other;
+            const bCat = categoryOrder[b.data.category] || categoryOrder.other;
+            return aCat - bCat;
+          });
+
+          let towerLayer = currentLayer;
+          let lastCategory = null;
+          sortedTowerNodes.forEach((node) => {
+            if (lastCategory && node.data.category !== lastCategory) towerLayer++;
+            myDiagram.model.setDataProperty(node.data, "layer", towerLayer);
+            lastCategory = node.data.category;
+          });
+          currentLayer = towerLayer + 1;
+        }
+
+        if (antennaNodes.length > 0) {
+          antennaNodes.forEach((node, index) => {
+            myDiagram.model.setDataProperty(node.data, "layer", currentLayer);
+            myDiagram.model.setDataProperty(node.data, "column", index);
+          });
+        }
+
+        myDiagram.commitTransaction("enforce location-based hierarchy");
+        setTimeout(() => positionSeparatorBetweenLocations(), 50);
+      } catch (e) {
+        myDiagram.rollbackTransaction();
+        throw e;
+      }
+    }
+
+    function analyzeLinkConnections() {
+      // IMPORTANT:
+      // The original implementation inferred "layers" from node.location.y and then counted
+      // outgoing links between consecutive layers. That made spacing depend on a prior layout pass.
+      // After switching to ALL mode (where we intentionally set a no-op layout), node locations may
+      // not reflect meaningful layers at the time this runs, causing maxSourceOutgoing=0 → spacing=180.
+      //
+      // To make spacing stable across SINGLE and ALL (and after mode switches), compute max outgoing
+      // links per source directly from the model. This matches how curviness is computed (per source).
+      if (!myDiagram || !myDiagram.model) {
+        return { maxParallelLinks: 0, layerConnections: new Map(), maxSourceOutgoing: 0 };
+      }
+
+      const links = (myDiagram.model.linkDataArray || []);
+      if (!links.length) {
+        return { maxParallelLinks: 0, layerConnections: new Map(), maxSourceOutgoing: 0 };
+      }
+
+      const outgoingCounts = new Map(); // fromKey -> count
+      for (const l of links) {
+        if (!l) continue;
+        if (typeof l.from === "undefined" || l.from === null) continue;
+        // Treat each link as an outgoing edge from `from` (matches GoJS GraphLinksModel semantics).
+        const k = String(l.from);
+        outgoingCounts.set(k, (outgoingCounts.get(k) || 0) + 1);
+      }
+
+      let maxSourceOutgoing = 0;
+      outgoingCounts.forEach((count) => {
+        if (count > maxSourceOutgoing) maxSourceOutgoing = count;
+      });
+
+      return { maxParallelLinks: 0, layerConnections: new Map(), maxSourceOutgoing };
+    }
+
+    function calculateDynamicLayerSpacing() {
+      const analysis = analyzeLinkConnections();
+      const maxSourceOutgoing = analysis.maxSourceOutgoing;
+      if (maxSourceOutgoing === 0) return 180;
+
+      const curvinessStep = 20;
+      const maxCurviness = maxSourceOutgoing > 0 ? (maxSourceOutgoing - 1) * curvinessStep : 0;
+      const safetyMargin = 100;
+      const nodeHeight = 60;
+      const requiredSpace = (maxCurviness * 2) + safetyMargin + nodeHeight;
+      const minSpacing = 180;
+      return Math.max(minSpacing, requiredSpace);
+    }
+
+     // Mount position helpers (e.g. "1L", "1R") used for stable antenna ordering/column assignment.
+    // Note: these are intentionally side-effect free and safe to call with null/undefined/invalid values.
+    function parseMountPosition(pos) {
+      const raw = (pos == null ? "" : String(pos)).trim();
+      if (!raw) return null;
+
+      // If comma-separated, use the first non-empty token.
+      const firstToken = raw.split(",").map(s => s.trim()).find(Boolean);
+      if (!firstToken) return null;
+
+      const normalized = firstToken.toUpperCase().replace(/\s+/g, "");
+      const m = normalized.match(/^(\d+)([LR])?$/);
+      if (!m) return null;
+
+      const slotNumber = parseInt(m[1], 10);
+      if (!Number.isFinite(slotNumber) || slotNumber <= 0) return null;
+
+      const side = (m[2] === "L" || m[2] === "R") ? m[2] : null;
+      return { slotNumber, side };
+    }
+
+    function antennaColumnIndex(pos) {
+      const parsed = parseMountPosition(pos);
+      if (!parsed) return null;
+
+      const base = (parsed.slotNumber - 1) * 2;
+      // Treat missing side as left (keeps a stable index while remaining tolerant of data quality).
+      return parsed.side === "R" ? base + 1 : base;
+    }
+
+    function createAntennaAwareLayout() {
+      const $ = go.GraphObject.make;
+
+      const baseLayout = $(go.LayeredDigraphLayout, {
+        direction: 90,
+        layerSpacing: calculateDynamicLayerSpacing(),
+        columnSpacing: 50,
+        packOption: go.LayeredDigraphLayout.PackExpand,
+        setsPortSpots: false,
+        initializeOption: go.LayeredDigraphLayout.InitDepthFirstOut,
+        aggressiveOption: go.LayeredDigraphLayout.AggressiveLess
+      });
+
+      const originalAssignLayers = baseLayout.assignLayers;
+      baseLayout.assignLayers = function() {
+        const result = originalAssignLayers.call(this);
+        const network = this.network;
+        if (network) {
+          const shelterNodes = [];
+          const towerNodes = [];
+          const antennaNodes = [];
+          const separatorNodes = [];
+
+          network.vertexes.each(function(vertex) {
+            const node = vertex.node;
+            if (!node) return;
+            if (node.data.category === "separator") separatorNodes.push(vertex);
+            else if (node.data.category === "antenna") antennaNodes.push(vertex);
+            else if (node.data.location === "shelter") shelterNodes.push(vertex);
+            else towerNodes.push(vertex);
+          });
+
+          let currentLayer = 0;
+
+          if (shelterNodes.length > 0) {
+            const shelterLayers = shelterNodes.map(v => (typeof v.layer === "number" ? v.layer : 0));
+            const minShelterLayer = Math.min(...shelterLayers);
+            shelterNodes.forEach(function(vertex) {
+              const baseLayer = (typeof vertex.layer === "number" ? vertex.layer : 0);
+              vertex.layer = (baseLayer - minShelterLayer) + currentLayer;
+            });
+            currentLayer = Math.max(...shelterNodes.map(v => (typeof v.layer === "number" ? v.layer : 0))) + 1;
+          }
+
+          if (towerNodes.length > 0) {
+            const towerLayers = towerNodes.map(v => (typeof v.layer === "number" ? v.layer : 0));
+            const minTowerLayer = Math.min(...towerLayers);
+            towerNodes.forEach(function(vertex) {
+              const baseLayer = (typeof vertex.layer === "number" ? vertex.layer : 0);
+              vertex.layer = (baseLayer - minTowerLayer) + currentLayer;
+            });
+            currentLayer = Math.max(...towerNodes.map(v => (typeof v.layer === "number" ? v.layer : 0))) + 1;
+          }
+
+          const antennaLayer = currentLayer;
+          antennaNodes.forEach(function(vertex, index) {
+            vertex.layer = antennaLayer;
+            vertex.column = index;
+          });
+        }
+
+        return result;
+      };
+
+      return baseLayout;
+    }
+
+    function getParallelLinkCurviness(link) {
+      const fromNode = link.fromNode;
+      const toNode = link.toNode;
+      if (!fromNode || !toNode) return 0;
+
+      const sourceNodeKey = fromNode.key;
+      const allLinksFromSameSource = [];
+      myDiagram.links.each(function(l) {
+        if (l.fromNode && l.fromNode.key === sourceNodeKey) allLinksFromSameSource.push(l);
+      });
+
+      if (allLinksFromSameSource.length <= 1) return 0;
+
+      function numericSuffix(key) {
+        const s = String(key || "");
+        const m = s.match(/(\d+)/g);
+        if (!m || !m.length) return null;
+        const n = parseInt(m[m.length - 1], 10);
+        return Number.isFinite(n) ? n : null;
+      }
+
+      allLinksFromSameSource.sort((a, b) => {
+        const aNum = numericSuffix(a.toNode && a.toNode.key);
+        const bNum = numericSuffix(b.toNode && b.toNode.key);
+        if (aNum !== null && bNum !== null && aNum !== bNum) return aNum - bNum;
+        const aKey = String(a.toNode && a.toNode.key || "");
+        const bKey = String(b.toNode && b.toNode.key || "");
+        if (aKey !== bKey) return aKey.localeCompare(bKey);
+        return (a.data.toPort || "").localeCompare(b.data.toPort || "");
+      });
+
+      const linkIndex = allLinksFromSameSource.indexOf(link);
+      if (linkIndex === -1) return 0;
+
+      const curvinessStep = 20;
+      const curviness = linkIndex * curvinessStep;
+      const isRightward = toNode.location.x > fromNode.location.x;
+      return isRightward ? -Math.abs(curviness) : Math.abs(curviness);
+    }
+
+    function precomputeCurvinessValues() {
+      if (!myDiagram || !myDiagram.model) return;
+
+      myDiagram.links.each(function(link) {
+        const sourceCurviness = getParallelLinkCurviness(link);
+        myDiagram.model.setDataProperty(link.data, "sourceCurviness", sourceCurviness);
+      });
+
+      const targetNodeGroups = new Map();
+      myDiagram.links.each(function(link) {
+        const toKey = link.toNode && link.toNode.key;
+        if (!toKey) return;
+        if (!targetNodeGroups.has(toKey)) targetNodeGroups.set(toKey, []);
+        targetNodeGroups.get(toKey).push(link);
+      });
+
+      targetNodeGroups.forEach((links) => {
+        if (links.length <= 1) return;
+
+        const curvinessMap = new Map();
+        links.forEach(link => {
+          const c = link.data.sourceCurviness;
+          if (!curvinessMap.has(c)) curvinessMap.set(c, []);
+          curvinessMap.get(c).push(link);
+        });
+
+        let hasConflicts = false;
+        curvinessMap.forEach((linksWithSameCurviness) => {
+          if (linksWithSameCurviness.length > 1) {
+            const sources = new Set();
+            linksWithSameCurviness.forEach(l => sources.add(l.fromNode && l.fromNode.key));
+            if (sources.size > 1) hasConflicts = true;
+          }
+        });
+
+        if (hasConflicts) {
+          links.sort((a, b) => {
+            const aNodeKey = parseInt(a.fromNode.key, 10);
+            const bNodeKey = parseInt(b.fromNode.key, 10);
+            if (aNodeKey !== bNodeKey) return aNodeKey - bNodeKey;
+            return (a.data.fromPort || "").localeCompare(b.data.fromPort || "");
+          });
+
+          links.forEach((link, index) => {
+            const curvinessStep = 20;
+            const curviness = index * curvinessStep;
+            const isRightward = link.toNode.location.x > link.fromNode.location.x;
+            const finalCurviness = isRightward ? -Math.abs(curviness) : Math.abs(curviness);
+            myDiagram.model.setDataProperty(link.data, "resolvedCurviness", finalCurviness);
+          });
+        } else {
+          links.forEach(link => {
+            myDiagram.model.setDataProperty(link.data, "resolvedCurviness", undefined);
+          });
+        }
+      });
+    }
+
+    function analyzeLayerSkippingLinks() {
+      if (!myDiagram || !myDiagram.model) return { directLinks: [], layerSkippingLinks: [] };
+
+      const nodeLayerMap = new Map();
+      const layerTolerance = 50;
+      const layerGroups = [];
+
+      myDiagram.nodes.each(function(node) {
+        if (!node.location || node.data.category === "separator") return;
+        const nodeY = node.location.y;
+
+        let assignedLayer = -1;
+        for (let i = 0; i < layerGroups.length; i++) {
+          const layerY = layerGroups[i].avgY;
+          if (Math.abs(nodeY - layerY) <= layerTolerance) {
+            assignedLayer = i;
+            layerGroups[i].nodes.push(node);
+            layerGroups[i].avgY = layerGroups[i].nodes.reduce((sum, n) => sum + n.location.y, 0) / layerGroups[i].nodes.length;
+            break;
+          }
+        }
+
+        if (assignedLayer === -1) {
+          assignedLayer = layerGroups.length;
+          layerGroups.push({ layer: assignedLayer, avgY: nodeY, nodes: [node] });
+        }
+
+        nodeLayerMap.set(node.key, assignedLayer);
+      });
+
+      layerGroups.sort((a, b) => a.avgY - b.avgY);
+      layerGroups.forEach((group, index) => {
+        group.layer = index;
+        group.nodes.forEach(node => {
+          nodeLayerMap.set(node.key, index);
+          if (node.data.layer !== index) myDiagram.model.setDataProperty(node.data, "layer", index);
+        });
+      });
+
+      const directLinks = [];
+      const layerSkippingLinks = [];
+
+      myDiagram.links.each(function(link) {
+        const fromNode = link.fromNode;
+        const toNode = link.toNode;
+        if (!fromNode || !toNode) return;
+        const fromLayer = nodeLayerMap.get(fromNode.key);
+        const toLayer = nodeLayerMap.get(toNode.key);
+        if (fromLayer === undefined || toLayer === undefined) return;
+
+        const layerDifference = Math.abs(fromLayer - toLayer);
+        const info = {
+          fromLayer, toLayer,
+          layerDifference
+        };
+        if (layerDifference <= 1) directLinks.push(info);
+        else layerSkippingLinks.push({ ...info, skippedLayers: layerDifference - 1 });
+      });
+
+      return { directLinks, layerSkippingLinks, layerGroups, nodeLayerMap };
+    }
+
+    function setLinkRoutingStrategy(strategy) {
+      const $ = go.GraphObject.make;
+
+      // Currently only one strategy used by the standalone renderer.
+      // Keeping switch for protocol compatibility / future extension.
+      switch (strategy) {
+        default:
+          myDiagram.linkTemplate =
+            $(go.Link,
+              {
+                routing: go.Link.AvoidsNodes,
+                corner: 10,
+                curve: go.Link.JumpOver,
+                reshapable: false,
+                resegmentable: false,
+                adjusting: go.Link.End,
+                fromSpot: go.Spot.Default,
+                toSpot: go.Spot.Default,
+                mouseEnter: function(e, link) {
+                  const shape = link.findObject("LINKSHAPE");
+                  if (shape) shape.strokeWidth = 8;
+                },
+                mouseLeave: function(e, link) {
+                  const shape = link.findObject("LINKSHAPE");
+                  if (shape) shape.strokeWidth = 2;
+                }
+              },
+              new go.Binding("fromEndSegmentLength", "", function(data, link) {
+                const c = (typeof data.resolvedCurviness !== "undefined") ? data.resolvedCurviness : (data.sourceCurviness || 0);
+                const fromLayer = link && link.fromNode && link.fromNode.data && link.fromNode.data.layer;
+                const toLayer = link && link.toNode && link.toNode.data && link.toNode.data.layer;
+                const skipped = (typeof fromLayer === "number" && typeof toLayer === "number")
+                  ? Math.max(0, Math.abs(fromLayer - toLayer) - 1)
+                  : 0;
+                return 40 + Math.abs(c) + (skipped * 20);
+              }),
+              new go.Binding("toEndSegmentLength", "", function(data, link) {
+                const c = (typeof data.resolvedCurviness !== "undefined") ? data.resolvedCurviness : (data.sourceCurviness || 0);
+                const fromLayer = link && link.fromNode && link.fromNode.data && link.fromNode.data.layer;
+                const toLayer = link && link.toNode && link.toNode.data && link.toNode.data.layer;
+                const skipped = (typeof fromLayer === "number" && typeof toLayer === "number")
+                  ? Math.max(0, Math.abs(fromLayer - toLayer) - 1)
+                  : 0;
+                return 40 + Math.abs(c) + (skipped * 20);
+              }),
+              new go.Binding("curviness", "", function(data, link) {
+                if (typeof data.resolvedCurviness !== "undefined") return data.resolvedCurviness;
+                if (typeof data.sourceCurviness !== "undefined") return data.sourceCurviness;
+                return getParallelLinkCurviness(link);
+              }),
+              $(go.Shape,
+                { name: "LINKSHAPE", strokeWidth: 2, stroke: "#333" },
+                new go.Binding("stroke", "color")
+              ),
+              $(go.TextBlock,
+                {
+                  font: "10px sans-serif",
+                  stroke: "black",
+                  background: "white",
+                  segmentIndex: 0,
+                  segmentFraction: 0.5,
+                  visible: false
+                },
+                new go.Binding("text", "label"),
+                new go.Binding("visible", "showLabel")
+              )
+            );
+          break;
+      }
+    }
+
+    function applyCurrentRoutingStrategy() {
+      const currentStrategy = "avoidsNodes";
+      precomputeCurvinessValues();
+      const layerAnalysis = analyzeLayerSkippingLinks();
+      myDiagram.layerAnalysis = layerAnalysis;
+      setLinkRoutingStrategy(currentStrategy);
+
+      setTimeout(() => {
+        if (!myDiagram) return;
+        myDiagram.links.each(function(link) {
+          link.invalidateRoute();
+        });
+        if (myRouter) myRouter.invalidateRouter();
+        myDiagram.requestUpdate();
+      }, 0);
+    }
+
+    function applyCurrentLayout() {
+      const antennaAwareLayout = createAntennaAwareLayout();
+      if (antennaAwareLayout) myDiagram.layout = antennaAwareLayout;
+
+      myDiagram.nodes.each(function(node) {
+        myDiagram.model.setDataProperty(node.data, "loc", "");
+      });
+
+      myDiagram.invalidateDocumentBounds();
+      myDiagram.layoutDiagram(true);
+
+      setTimeout(() => {
+        enforceAntennaBottomLayer();
+        setTimeout(() => positionSeparatorBetweenLocations(), 50);
+      }, 150);
+
+      setTimeout(() => myDiagram.zoomToFit(), 200);
+    }
+
+    function positionSeparatorBetweenLocations() {
+      if (!myDiagram || !myDiagram.model) return;
+
+      const separatorNodes = [];
+      const towerNodes = [];
+      const shelterNodes = [];
+
+      myDiagram.nodes.each(function(node) {
+        if (!node.location || isNaN(node.location.x) || isNaN(node.location.y)) return;
+        if (node.data.category === "separator") separatorNodes.push(node);
+        else if (node.data.location === "shelter") shelterNodes.push(node);
+        else if (node.data.category !== "antenna") towerNodes.push(node);
+      });
+
+      if (separatorNodes.length === 0) return;
+
+      let alignmentX = null;
+      if (towerNodes.length > 0) {
+        const xs = towerNodes.map(n => n.location.x).filter(x => !isNaN(x));
+        if (xs.length > 0) alignmentX = xs.reduce((s, x) => s + x, 0) / xs.length;
+      }
+      if (alignmentX === null && shelterNodes.length > 0) {
+        const xs = shelterNodes.map(n => n.location.x).filter(x => !isNaN(x));
+        if (xs.length > 0) alignmentX = xs.reduce((s, x) => s + x, 0) / xs.length;
+      }
+      if (alignmentX === null) alignmentX = myDiagram.documentBounds.centerX;
+
+      let separatorY = null;
+      if (shelterNodes.length > 0 && towerNodes.length > 0) {
+        const towerBottomY = Math.max(...towerNodes.map(n => n.location.y));
+        const shelterTopY = Math.min(...shelterNodes.map(n => n.location.y));
+        const upper = Math.min(towerBottomY, shelterTopY);
+        const lower = Math.max(towerBottomY, shelterTopY);
+        separatorY = (upper + lower) / 2;
+      } else if (shelterNodes.length === 0 && towerNodes.length > 0) {
+        const lastTowerY = Math.max(...towerNodes.map(n => n.location.y));
+        separatorY = lastTowerY + 100;
+      } else if (shelterNodes.length > 0 && towerNodes.length === 0) {
+        const lastShelterY = Math.max(...shelterNodes.map(n => n.location.y));
+        separatorY = lastShelterY + 50;
+      } else {
+        separatorY = 0;
+      }
+
+      myDiagram.startTransaction("position separator between locations");
+      try {
+        separatorNodes.forEach((separatorNode) => {
+          const newLocation = new go.Point(alignmentX, separatorY);
+          myDiagram.model.setDataProperty(separatorNode.data, "loc", go.Point.stringify(newLocation));
+          separatorNode.location = newLocation;
+        });
+        myDiagram.commitTransaction("position separator between locations");
+      } catch (e) {
+        myDiagram.rollbackTransaction();
+        throw e;
+      }
+    }
+
+    // ------------------------------
+    // Data loading (ported)
+    // ------------------------------
+    function getLocationFromPayload(uniqueId, nodeName, nodeCategory) {
+      if (!originalRequestPayload) return "tower";
+
+      try {
+        const content = JSON.parse(originalRequestPayload.input.messages[0].content);
+        const projectData = content.projectData || {};
+        const equipmentTypes = ["Antenna", "SpareAntenna", "Radio", "Filter", "OVP", "BBU"];
+
+        for (const type of equipmentTypes) {
+          const equipmentArray = projectData[type];
+          if (!equipmentArray) continue;
+          for (const equipment of equipmentArray) {
+            if (equipment.unique_id === uniqueId) {
+              const loc = equipment.locations || equipment.location || "tower";
+              return String(loc).toLowerCase();
+            }
+            if (nodeName && (equipment.model === nodeName || equipment.orderable_name === nodeName || equipment.stencil_name === nodeName)) {
+              const loc = equipment.locations || equipment.location || "tower";
+              return String(loc).toLowerCase();
+            }
+            if (nodeCategory && equipment.type && String(nodeCategory).toLowerCase() === String(equipment.type).toLowerCase()) {
+              const loc = equipment.locations || equipment.location || "tower";
+              return String(loc).toLowerCase();
+            }
+          }
+        }
+
+        if (nodeCategory && String(nodeCategory).toLowerCase() === "bbu") return "shelter";
+        if (nodeCategory && String(nodeCategory).toLowerCase() === "antenna") return "tower";
+        return "tower";
+      } catch (e) {
+        return "tower";
+      }
+    }
+
+    async function loadDiagramDataIntoGoJS(sectorDiagram, projectNumber, sectorKey) {
+      if (!myDiagram) throw new Error("Diagram not initialized");
+
+      resetExportReady();
+
+      let nodeData, linkData;
+      if (sectorDiagram.gojsNodes && sectorDiagram.gojsLinks) {
+        nodeData = sectorDiagram.gojsNodes;
+        linkData = sectorDiagram.gojsLinks;
+      } else if (sectorDiagram.nodeDataArray && sectorDiagram.linkDataArray) {
+        nodeData = sectorDiagram.nodeDataArray;
+        linkData = sectorDiagram.linkDataArray;
+      } else {
+        throw new Error("Invalid diagram format: missing node or link data");
+      }
+
+      const transformedNodes = nodeData.map(node => {
+        let leftArray = [];
+        let rightArray = [];
+        let topArray = [];
+        let bottomArray = [];
+
+        if (node.ports && typeof node.ports === "object") {
+          leftArray = node.ports.left || [];
+          rightArray = node.ports.right || [];
+          topArray = node.ports.top || [];
+          bottomArray = node.ports.bottom || [];
+        } else {
+          leftArray = node.leftArray || [];
+          rightArray = node.rightArray || [];
+          topArray = node.topArray || [];
+          bottomArray = node.bottomArray || [];
+        }
+
+        const ensurePortSizes = (portArray) => (portArray || []).map(port => ({
+          ...port,
+          width: port.width || 12,
+          height: port.height || 12
+        }));
+
+        leftArray = ensurePortSizes(leftArray);
+        rightArray = ensurePortSizes(rightArray);
+        topArray = ensurePortSizes(topArray);
+        bottomArray = ensurePortSizes(bottomArray);
+
+        const responseLocationRaw = (node.location || node.locations || "").toString().trim().toLowerCase();
+        const responseLocation = (responseLocationRaw === "shelter" || responseLocationRaw === "tower") ? responseLocationRaw : "";
+
+        const location =
+          responseLocation ||
+          getLocationFromPayload(node.unique_id || node.key, node.text || node.name, node.category);
+         
+        // Preserve antenna mount position (used later for slot ordering / labels).
+        // Normalized onto `position` regardless of whether upstream uses `position`, `antennaPosition`, or `mountPosition`.
+        let position = "";
+        try {
+          position = String(node.position ?? node.antennaPosition ?? node.mountPosition ?? "").trim();
+        } catch (e) {
+          position = "";
+        }
+
+        // If the API provides explicit diagram locations, preserve them.
+        // NOTE: Do not confuse node.location/location*s* ("tower"/"shelter") with node.loc ("x y").
+        let loc = undefined;
+        try {
+          if (node && typeof node.loc === "string" && node.loc.trim()) loc = node.loc.trim();
+          else if (node && typeof node.loc === "object" && node.loc && isFinite(node.loc.x) && isFinite(node.loc.y)) {
+            loc = go.Point.stringify(new go.Point(node.loc.x, node.loc.y));
+          } else if (node && isFinite(node.x) && isFinite(node.y)) {
+            loc = go.Point.stringify(new go.Point(Number(node.x), Number(node.y)));
+          }
+        } catch (e) {
+          loc = undefined;
+        }
+
+        return {
+          key: node.key,
+          name: node.text || node.name || "Equipment",
+          color: node.color || "#e1f5fe",
+          category: node.category,
+          location: location,
+          position: position,
+          unique_id: node.unique_id,
+          loc: loc,
+          leftArray,
+          rightArray,
+          topArray,
+          bottomArray
+        };
+      });
+
+      transformedNodes.push({
+        key: "SEPARATOR_LINE",
+        category: "separator",
+        name: "Tower/Shelter Separator"
+      });
+
+      const transformedLinks = linkData.map(link => ({
+        from: link.to,
+        to: link.from,
+        fromPort: link.toPort,
+        toPort: link.fromPort,
+        label: link.label || link.text || "",
+        color: link.color || "#333",
+        thickness: link.thickness || 2,
+        category: link.category || "",
+        sourceBand: link.sourceBand || "",
+        targetBand: link.targetBand || "",
+        connectionType: link.connectionType || ""
+      }));
+
+      const newModel = new go.GraphLinksModel(transformedNodes, transformedLinks);
+      newModel.linkFromPortIdProperty = "fromPort";
+      newModel.linkToPortIdProperty = "toPort";
+      myDiagram.model = newModel;
+      // Model swap resets undo enablement; re-enable so iframe UNDO/REDO works in edit mode.
+      ensureUndoEnabled();
+      setTimeout(() => { try { markExportReadyIfPossible(); } catch (e) {} }, 0);
+
+      setTimeout(() => {
+        applyCurrentLayout();
+        scheduleLegendPositioning();
+        setTimeout(() => {
+          applyCurrentRoutingStrategy();
+          scheduleLegendPositioning();
+        }, 200);
+      }, 100);
+    }
+
+    function getSectorDisplayName(sectorKey) {
+      const k = String(sectorKey || "").trim().toUpperCase();
+      return SECTOR_NAME_MAP[k] ? `${SECTOR_NAME_MAP[k]} (${k})` : k;
+    }
+
+    function computeContentBoundsForSingleSectorLabel() {
+      if (!myDiagram) return null;
+      let r = null;
+      myDiagram.nodes.each(function(node) {
+        if (!node || !node.data) return;
+        const cat = node.data.category;
+        if (cat === "sectorLabel" || cat === "sectorDivider") return;
+        // Ignore nodes without measurable bounds
+        const b = node.actualBounds;
+        if (!b || !isFinite(b.width) || !isFinite(b.height) || b.width <= 0 || b.height <= 0) return;
+        r = r ? r.unionRect(b) : b.copy();
+      });
+      return r || myDiagram.documentBounds;
+    }
+
+    function upsertSingleSectorLabel(sectorKey) {
+      if (!myDiagram || !myDiagram.model) return;
+
+      const key = String(sectorKey || "").trim().toUpperCase();
+      const isAll = (key === "ALL");
+
+      myDiagram.startTransaction("single sector label");
+      try {
+        const existing = myDiagram.model.findNodeDataForKey(SINGLE_SECTOR_LABEL_KEY);
+
+        // In ALL mode, remove any single-sector label to avoid duplication.
+        if (!key || isAll) {
+          if (existing) myDiagram.model.removeNodeData(existing);
+          myDiagram.commitTransaction("single sector label");
+          return;
+        }
+
+        // Position label at top-center of the rendered content.
+        myDiagram.invalidateDocumentBounds();
+        const b = computeContentBoundsForSingleSectorLabel();
+        if (!b || !isFinite(b.x) || !isFinite(b.y)) {
+          myDiagram.commitTransaction("single sector label");
+          return;
+        }
+
+        const labelLoc = go.Point.stringify(new go.Point(b.centerX, b.y - SINGLE_SECTOR_LABEL_Y_GAP));
+        const labelText = getSectorDisplayName(key);
+
+        if (existing) {
+          myDiagram.model.setDataProperty(existing, "category", "sectorLabel");
+          myDiagram.model.setDataProperty(existing, "text", labelText);
+          myDiagram.model.setDataProperty(existing, "loc", labelLoc);
+        } else {
+          myDiagram.model.addNodeData({
+            key: SINGLE_SECTOR_LABEL_KEY,
+            category: "sectorLabel",
+            text: labelText,
+            loc: labelLoc
+          });
+        }
+
+        myDiagram.commitTransaction("single sector label");
+      } catch (e) {
+        myDiagram.rollbackTransaction();
+        throw e;
+      }
+    }
+
+    function parseLocMaybe(loc) {
+      if (typeof loc !== "string") return null;
+      const s = loc.trim();
+      if (!s) return null;
+      try {
+        const p = go.Point.parse(s);
+        if (!p || !isFinite(p.x) || !isFinite(p.y)) return null;
+        return p;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function computeBoundsFromNodes(nodeDatas) {
+      let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+
+      for (const n of (nodeDatas || [])) {
+        if (!n || n.category === "sectorLabel" || n.category === "sectorDivider") continue;
+
+        const p = parseLocMaybe(n.loc);
+        if (!p) continue;
+
+        // NEW: account for node visual size captured during snapshot
+        const w = Number(n.__w);
+        const h = Number(n.__h);
+        const halfW = (isFinite(w) && w > 0) ? (w / 2) : 0;
+        const halfH = (isFinite(h) && h > 0) ? (h / 2) : 0;
+
+        minX = Math.min(minX, p.x - halfW);
+        maxX = Math.max(maxX, p.x + halfW);
+        minY = Math.min(minY, p.y - halfH);
+        maxY = Math.max(maxY, p.y + halfH);
+      }
+
+      if (!isFinite(minX) || !isFinite(maxX) || !isFinite(minY) || !isFinite(maxY)) {
+        return { minX: 0, maxX: 0, minY: 0, maxY: 0, hasAny: false };
+      }
+      return { minX, maxX, minY, maxY, hasAny: true };
+    }
+
+    function shiftNodeLoc(nodeData, dx, dy) {
+      const p = parseLocMaybe(nodeData && nodeData.loc);
+      if (!p) return nodeData;
+      const np = new go.Point(p.x + dx, p.y + dy);
+      return { ...nodeData, loc: go.Point.stringify(np) };
+    }
+
+    function computeTowerShelterSeparatorLocForNodes(nodeDatas) {
+      const tower = [];
+      const shelter = [];
+
+      for (const n of (nodeDatas || [])) {
+        if (!n) continue;
+        if (n.category === "separator") continue;
+        const p = parseLocMaybe(n.loc);
+        if (!p) continue;
+        if (n.location === "shelter") shelter.push(p);
+        else if (n.category !== "antenna") tower.push(p);
+      }
+
+      const avgX = (pts) => pts.reduce((s, p) => s + p.x, 0) / pts.length;
+      const maxY = (pts) => Math.max(...pts.map(p => p.y));
+      const minY = (pts) => Math.min(...pts.map(p => p.y));
+
+      let alignmentX = null;
+      if (tower.length) alignmentX = avgX(tower);
+      else if (shelter.length) alignmentX = avgX(shelter);
+      else alignmentX = 0;
+
+      let separatorY = 0;
+      if (shelter.length && tower.length) {
+        const towerBottomY = maxY(tower);
+        const shelterTopY = minY(shelter);
+        const upper = Math.min(towerBottomY, shelterTopY);
+        const lower = Math.max(towerBottomY, shelterTopY);
+        separatorY = (upper + lower) / 2;
+      } else if (!shelter.length && tower.length) {
+        separatorY = maxY(tower) + 100;
+      } else if (shelter.length && !tower.length) {
+        separatorY = maxY(shelter) + 50;
+      }
+
+      return new go.Point(alignmentX, separatorY);
+    }
+
+    function extractSectorNodesAndLinks(sectorDiagram) {
+      if (!sectorDiagram) throw new Error("Invalid sector diagram");
+      if (sectorDiagram.gojsNodes && sectorDiagram.gojsLinks) {
+        return { nodeData: sectorDiagram.gojsNodes, linkData: sectorDiagram.gojsLinks };
+      }
+      if (sectorDiagram.nodeDataArray && sectorDiagram.linkDataArray) {
+        return { nodeData: sectorDiagram.nodeDataArray, linkData: sectorDiagram.linkDataArray };
+      }
+      throw new Error("Invalid diagram format: missing node or link data");
+    }
+
+    function deepCloneJson(obj) {
+      return JSON.parse(JSON.stringify(obj));
+    }
+
+    function runLayoutForSnapshot() {
+      if (!myDiagram || !myDiagram.model) return;
+
+      const antennaAwareLayout = createAntennaAwareLayout();
+      if (antennaAwareLayout) myDiagram.layout = antennaAwareLayout;
+
+      myDiagram.nodes.each(function(node) {
+        try { myDiagram.model.setDataProperty(node.data, "loc", ""); } catch (e) {}
+      });
+
+      myDiagram.invalidateDocumentBounds();
+      myDiagram.layoutDiagram(true);
+
+      try { positionSeparatorBetweenLocations(); } catch (e) {}
+
+      // Persist computed locations + sizes back into model data so ALL-mode can offset by sector.
+      myDiagram.nodes.each(function(node) {
+        if (!node || !node.data) return;
+
+        // loc
+        if (node.location && isFinite(node.location.x) && isFinite(node.location.y)) {
+          try { myDiagram.model.setDataProperty(node.data, "loc", go.Point.stringify(node.location)); } catch (e) {}
+        }
+
+        // NEW: size (so ALL bounds/dividers include wide nodes like OVP)
+        try {
+          node.ensureBounds();
+          const b = node.actualBounds;
+          if (b && isFinite(b.width) && isFinite(b.height) && b.width > 0 && b.height > 0) {
+            myDiagram.model.setDataProperty(node.data, "__w", b.width);
+            myDiagram.model.setDataProperty(node.data, "__h", b.height);
+          }
+        } catch (e) {}
+      });
+    }
+
+    function getLaidOutSectorSnapshotForAll(sectorDiagram) {
+      if (!myDiagram) throw new Error("Diagram not initialized");
+
+      const { nodeData, linkData } = extractSectorNodesAndLinks(sectorDiagram);
+
+      // Build a per-sector model using the same transformation as single-sector mode.
+      const transformedNodes = (nodeData || []).map(node => {
+        let leftArray = [];
+        let rightArray = [];
+        let topArray = [];
+        let bottomArray = [];
+
+        if (node.ports && typeof node.ports === "object") {
+          leftArray = node.ports.left || [];
+          rightArray = node.ports.right || [];
+          topArray = node.ports.top || [];
+          bottomArray = node.ports.bottom || [];
+        } else {
+          leftArray = node.leftArray || [];
+          rightArray = node.rightArray || [];
+          topArray = node.topArray || [];
+          bottomArray = node.bottomArray || [];
+        }
+
+        const ensurePortSizes = (portArray) => (portArray || []).map(port => ({
+          ...port,
+          width: port.width || 12,
+          height: port.height || 12
+        }));
+
+        leftArray = ensurePortSizes(leftArray);
+        rightArray = ensurePortSizes(rightArray);
+        topArray = ensurePortSizes(topArray);
+        bottomArray = ensurePortSizes(bottomArray);
+
+        const responseLocationRaw = (node.location || node.locations || "").toString().trim().toLowerCase();
+        const responseLocation = (responseLocationRaw === "shelter" || responseLocationRaw === "tower") ? responseLocationRaw : "";
+        const location =
+          responseLocation ||
+          getLocationFromPayload(node.unique_id || node.key, node.text || node.name, node.category);
+
+        // Preserve antenna mount position (used later for slot ordering / labels).
+        // Normalized onto `position` regardless of whether upstream uses `position`, `antennaPosition`, or `mountPosition`.
+        let position = "";
+        try {
+          position = String(node.position ?? node.antennaPosition ?? node.mountPosition ?? "").trim();
+        } catch (e) {
+          position = "";
+        }
+
+        // Preserve explicit loc if present, otherwise layout will compute it.
+        let loc = undefined;
+        try {
+          if (node && typeof node.loc === "string" && node.loc.trim()) loc = node.loc.trim();
+          else if (node && typeof node.loc === "object" && node.loc && isFinite(node.loc.x) && isFinite(node.loc.y)) {
+            loc = go.Point.stringify(new go.Point(node.loc.x, node.loc.y));
+          } else if (node && isFinite(node.x) && isFinite(node.y)) {
+            loc = go.Point.stringify(new go.Point(Number(node.x), Number(node.y)));
+          }
+        } catch (e) {
+          loc = undefined;
+        }
+
+        return {
+          key: String(node.key),
+          name: node.text || node.name || "Equipment",
+          color: node.color || "#e1f5fe",
+          category: node.category,
+          location: location,
+          position: position,
+          unique_id: node.unique_id,
+          isSharedEquipment: node.isSharedEquipment || false, // Preserve shared equipment flag
+          loc: loc,
+          leftArray,
+          rightArray,
+          topArray,
+          bottomArray
+        };
+      });
+
+      transformedNodes.push({
+        key: "SEPARATOR_LINE",
+        category: "separator",
+        name: "Tower/Shelter Separator"
+      });
+
+      const transformedLinks = (linkData || []).map(link => ({
+        from: String(link.to),
+        to: String(link.from),
+        fromPort: link.toPort,
+        toPort: link.fromPort,
+        label: link.label || link.text || "",
+        color: link.color || "#333",
+        thickness: link.thickness || 2,
+        category: link.category || "",
+        sourceBand: link.sourceBand || "",
+        targetBand: link.targetBand || "",
+        connectionType: link.connectionType || ""
+      }));
+
+      const m = new go.GraphLinksModel(transformedNodes, transformedLinks);
+      m.linkFromPortIdProperty = "fromPort";
+      m.linkToPortIdProperty = "toPort";
+      myDiagram.model = m;
+
+      // Synchronous layout snapshot: compute locs as in single-sector view.
+      runLayoutForSnapshot();
+
+      return {
+        nodes: deepCloneJson(myDiagram.model.nodeDataArray || []),
+        links: deepCloneJson(myDiagram.model.linkDataArray || [])
+      };
+    }
+
+    async function buildCombinedAllSectorsModelAsync() {
+      if (!lastParsedResult || !lastParsedResult.sectorDiagrams) throw new Error("No previous generation available");
+
+      const sectorDiagrams = lastParsedResult.sectorDiagrams;
+      const sectorKeys = Object.keys(sectorDiagrams)
+        .map(k => String(k))
+        .filter(k => sectorDiagrams[k] && sectorDiagrams[k].success)
+        .sort((a, b) => a.localeCompare(b));
+
+      if (!sectorKeys.length) throw new Error("No successful sectors available for ALL view");
+
+      const combinedNodes = [];
+      const combinedLinks = [];
+      const sectorInfos = [];
+      
+      // Track shared equipment to ensure deduplication
+      const sharedEquipmentMap = new Map(); // key -> node data
+      const sharedEquipmentKeys = new Set(); // original keys of shared equipment
+      const sharedEquipmentLayoutMap = new Map(); // key -> laid-out node data snapshot (includes loc + __w/__h)
+
+      const SECTOR_SPACING = 800;
+      const LABEL_Y_GAP = 180;
+
+      let runningX = 0;
+
+      // First pass: identify all shared equipment across sectors
+      // IMPORTANT: Check nodeDataArray directly, not gojsNodes, as isSharedEquipment flag is in nodeDataArray
+      for (const sectorKey of sectorKeys) {
+        const sectorDiagram = sectorDiagrams[sectorKey];
+        const rawNodeData = sectorDiagram.nodeDataArray || sectorDiagram.gojsNodes || [];
+        
+        for (const node of rawNodeData) {
+          if (node && node.isSharedEquipment === true) {
+            const nodeKey = String(node.key);
+            if (!sharedEquipmentMap.has(nodeKey)) {
+              sharedEquipmentMap.set(nodeKey, node);
+              sharedEquipmentKeys.add(nodeKey);
+            }
+          }
+        }
+      }
+
+      // Second pass: build combined diagram with deduplication
+      for (const sectorKey of sectorKeys) {
+        const sectorDiagram = sectorDiagrams[sectorKey];
+        // Layout this sector first so ALL mode looks like the individual sector view.
+        const snap = getLaidOutSectorSnapshotForAll(sectorDiagram);
+
+        // Capture the laid-out shared equipment nodes (loc + size) from the full sector snapshot
+        // BEFORE filtering them out of the per-sector render list. We'll render shared gear once later,
+        // but using these stable per-sector layout results (prevents shared nodes snapping to (0,0) or drifting).
+        try {
+          for (const n of (snap.nodes || [])) {
+            const k = String(n && n.key);
+            if (!k) continue;
+            if (!sharedEquipmentKeys.has(k)) continue;
+            if (!sharedEquipmentLayoutMap.has(k)) {
+              sharedEquipmentLayoutMap.set(k, deepCloneJson(n));
+            }
+          }
+        } catch (e) {}
+
+        // Prefix keys to avoid collisions, but NOT for shared equipment.
+        // IMPORTANT: In ALL view we render a single, global Tower/Shelter separator line.
+        // Remove per-sector separators so they don't end up at different Y positions.
+        let nodes = (snap.nodes || [])
+          .filter(n => !(n && n.category === "separator"))
+          .filter(n => !sharedEquipmentKeys.has(String(n.key))) // Filter out shared equipment (will be added separately)
+          .map(n => ({
+            ...n,
+            key: `${sectorKey}_${String(n.key)}`
+          }));
+
+        // Map links: preserve original keys for shared equipment, prefix for sector-specific
+        const links = (snap.links || []).map(l => {
+          const fromKey = String(l.from);
+          const toKey = String(l.to);
+          return {
+            ...l,
+            from: sharedEquipmentKeys.has(fromKey) ? fromKey : `${sectorKey}_${fromKey}`,
+            to: sharedEquipmentKeys.has(toKey) ? toKey : `${sectorKey}_${toKey}`
+          };
+        });
+
+        const bounds = computeBoundsFromNodes(nodes.filter(n => n.category !== "separator"));
+        const dx = bounds.hasAny ? (runningX - bounds.minX) : runningX;
+
+        // Shift all loc-aware nodes into their sector slot.
+        nodes = nodes.map(n => shiftNodeLoc(n, dx, 0));
+
+        const shiftedBounds = computeBoundsFromNodes(nodes.filter(n => n.category !== "separator"));
+        const labelX = (shiftedBounds.minX + shiftedBounds.maxX) / 2;
+        const labelY = shiftedBounds.minY - LABEL_Y_GAP;
+        nodes.push({
+          key: `__SECTOR_LABEL_${sectorKey}`,
+          category: "sectorLabel",
+          text: getSectorDisplayName(sectorKey),
+          loc: go.Point.stringify(new go.Point(labelX, labelY))
+        });
+
+        combinedNodes.push(...nodes);
+        combinedLinks.push(...links);
+        sectorInfos.push({ sectorKey, bounds: shiftedBounds });
+
+        runningX = shiftedBounds.maxX + SECTOR_SPACING;
+      }
+      
+      // Add shared equipment nodes once (positioned in a shared area)
+      if (sharedEquipmentMap.size > 0) {
+        // Position shared equipment in the center.
+        // IMPORTANT: Use the per-sector laid-out snapshot locations (loc) rather than laying out each shared node alone.
+        // Laying out a single-node model often produces (0,0) (or otherwise unstable) positions and causes "shelter OVP"
+        // to jump upward and overlap the tower OVP in ALL view.
+        const globalMinX = Math.min(...sectorInfos.map(s => s.bounds.minX));
+        const globalMaxX = Math.max(...sectorInfos.map(s => s.bounds.maxX));
+        
+        const centerX = (globalMinX + globalMaxX) / 2;
+
+        // Pack shared nodes by their rendered width to avoid overlaps (OVPs can be ~6000px wide).
+        const PAD_X = 120;
+        const DEFAULT_W = 200;
+
+        function getNodeWidth(n) {
+          const w = Number(n && n.__w);
+          const w2 = Number(n && n.width);
+          if (isFinite(w) && w > 0) return w;
+          if (isFinite(w2) && w2 > 0) return w2;
+          return DEFAULT_W;
+        }
+
+        function median(nums) {
+          const arr = (nums || []).filter(v => typeof v === "number" && isFinite(v)).sort((a, b) => a - b);
+          if (!arr.length) return null;
+          const mid = Math.floor(arr.length / 2);
+          return (arr.length % 2) ? arr[mid] : ((arr[mid - 1] + arr[mid]) / 2);
+        }
+
+        // Group shared equipment by location so tower and shelter equipment don't collapse onto the same Y.
+        // (This is the direct cause of "shelter OVP overlapping tower OVP" when both are shared.)
+        const byLoc = new Map(); // "tower"|"shelter"|"" -> array of laid-out nodes
+        for (const [nodeKey, _sharedNode] of sharedEquipmentMap) {
+          const layoutNode = sharedEquipmentLayoutMap.get(String(nodeKey));
+          if (!layoutNode) continue;
+          const locStr = String(layoutNode.location || "").toLowerCase();
+          const bucket = (locStr === "shelter" || locStr === "tower") ? locStr : "";
+          if (!byLoc.has(bucket)) byLoc.set(bucket, []);
+          byLoc.get(bucket).push({ nodeKey: String(nodeKey), layoutNode });
+        }
+
+        // Determine a stable per-location Y using the median of that location's original laid-out Y values.
+        // This keeps shared tower OVP near tower band (e.g. y~5800) and shared shelter OVP near shelter band (e.g. y~6600).
+        const rowYByLoc = new Map();
+        byLoc.forEach((items, bucket) => {
+          const ys = [];
+          for (const it of items) {
+            const p = parseLocMaybe(it.layoutNode && it.layoutNode.loc);
+            if (p) ys.push(p.y);
+          }
+          rowYByLoc.set(bucket, median(ys));
+        });
+
+        function placePackedRow(items, y) {
+          if (!items || !items.length) return;
+          const withW = items.map(it => ({
+            ...it,
+            w: getNodeWidth(it.layoutNode)
+          }));
+          const totalW = withW.reduce((s, it) => s + it.w + PAD_X, 0);
+          let xLeft = centerX - (totalW / 2);
+          for (const it of withW) {
+            const cx = xLeft + (it.w / 2);
+            const newLoc = go.Point.stringify(new go.Point(cx, y));
+            combinedNodes.push({
+              ...it.layoutNode,
+              key: it.nodeKey,           // Keep original key (no prefix)
+              isSharedEquipment: true,   // Preserve flag
+              loc: newLoc
+            });
+            xLeft += it.w + PAD_X;
+          }
+        }
+
+        const towerItems = byLoc.get("tower") || [];
+        const shelterItems = byLoc.get("shelter") || [];
+        const otherItems = byLoc.get("") || [];
+
+        // If we can't infer a location-specific Y, fall back to placing below all sector-specific content.
+        const globalMaxY = Math.max(...sectorInfos.map(s => s.bounds.maxY));
+        const fallbackBaseY = globalMaxY + 300;
+        const towerY = (rowYByLoc.get("tower") != null) ? rowYByLoc.get("tower") : fallbackBaseY;
+        const shelterY = (rowYByLoc.get("shelter") != null) ? rowYByLoc.get("shelter") : (fallbackBaseY + 500);
+        const otherY = (rowYByLoc.get("") != null) ? rowYByLoc.get("") : (fallbackBaseY + 1000);
+
+        placePackedRow(towerItems, towerY);
+        placePackedRow(shelterItems, shelterY);
+        placePackedRow(otherItems, otherY);
+      }
+
+      // Add vertical dotted separators between sectors.
+      const globalMinY = Math.min(...sectorInfos.map(s => s.bounds.minY));
+      const globalMaxY = Math.max(...sectorInfos.map(s => s.bounds.maxY));
+      const dividerHeight = (globalMaxY - globalMinY) + 600;
+      const dividerY = (globalMinY + globalMaxY) / 2;
+
+      for (let i = 0; i < sectorInfos.length - 1; i++) {
+        const left = sectorInfos[i];
+        const x = left.bounds.maxX + (SECTOR_SPACING / 2);
+        const rightKey = sectorInfos[i + 1].sectorKey;
+        combinedNodes.push({
+          key: `__SECTOR_DIVIDER_${left.sectorKey}_${rightKey}`,
+          category: "sectorDivider",
+          loc: go.Point.stringify(new go.Point(x, dividerY)),
+          height: dividerHeight
+        });
+      }
+
+      // Add ONE global Tower/Shelter separator line aligned across ALL sectors.
+      // This fixes per-sector Y drift when sectors have different tower/shelter content extents.
+      try {
+        const contentNodes = (combinedNodes || []).filter(n =>
+          n && n.category !== "sectorLabel" && n.category !== "sectorDivider"
+        );
+
+        const b = computeBoundsFromNodes(contentNodes);
+
+        const towerYs = [];
+        const shelterYs = [];
+        for (const n of contentNodes) {
+          if (!n) continue;
+          const p = parseLocMaybe(n.loc);
+          if (!p) continue;
+          if (n.location === "shelter") shelterYs.push(p.y);
+          else if (n.category !== "antenna") towerYs.push(p.y);
+        }
+
+        let separatorY = 0;
+        if (towerYs.length && shelterYs.length) {
+          const towerBottomY = Math.max(...towerYs);
+          const shelterTopY = Math.min(...shelterYs);
+          const upper = Math.min(towerBottomY, shelterTopY);
+          const lower = Math.max(towerBottomY, shelterTopY);
+          separatorY = (upper + lower) / 2;
+        } else if (towerYs.length) {
+          separatorY = Math.max(...towerYs) + 100;
+        } else if (shelterYs.length) {
+          separatorY = Math.max(...shelterYs) + 50;
+        }
+
+        const centerX = (b && b.hasAny) ? ((b.minX + b.maxX) / 2) : 0;
+        const width = (b && b.hasAny) ? ((b.maxX - b.minX) + 600) : 2000;
+
+        combinedNodes.push({
+          key: "__GLOBAL_SEPARATOR_LINE__",
+          category: "separator",
+          loc: go.Point.stringify(new go.Point(centerX, separatorY)),
+          width: width
+        });
+      } catch (e) {
+        // best-effort; do not break ALL view if separator calc fails
+      }
+
+      const model = new go.GraphLinksModel(combinedNodes, combinedLinks);
+      model.linkFromPortIdProperty = "fromPort";
+      model.linkToPortIdProperty = "toPort";
+      return { model, sectorKeys };
+    }
+
+    function pickSectorKey(sectorDiagrams, preferredKey) {
+      if (!sectorDiagrams) return null;
+      if (preferredKey && sectorDiagrams[preferredKey]) return preferredKey;
+      if (sectorDiagrams["A"]) return "A";
+      const keys = Object.keys(sectorDiagrams);
+      return keys.length ? keys[0] : null;
+    }
+
+    async function callRunsWait(requestPayload) {
+      const url = apiBaseUrl.replace(/\/+$/, "") + "/runs/wait";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestPayload)
+    });
+      if (!response.ok) throw new Error(`Server responded with status: ${response.status}`);
+      return await response.json();
+    }
+
+    function normalizeRunsWaitResult(data) {
+      if (!data) return null;
+      if (typeof data.result === "string") return JSON.parse(data.result);
+      return data.result;
+    }
+
+    function buildRunsWaitPayload(msg) {
+      if (msg && msg.requestPayload) return msg.requestPayload;
+
+      // Default: build the same structure the standalone renderer used.
+      // msg.content can be a stringified JSON object for "messages[0].content".
+      const projectNumber = msg && msg.projectNumber ? String(msg.projectNumber) : "";
+      const contentObj = msg && msg.content
+        ? (typeof msg.content === "string" ? JSON.parse(msg.content) : msg.content)
+        : {
+            action: "generate-sector",
+            projectNumber,
+            projectData: msg && msg.projectData ? msg.projectData : {},
+            preferences: msg && msg.preferences ? msg.preferences : {}
+          };
+
+      return {
+        assistant_id: "plumbingtool",
+        input: {
+          messages: [
+            {
+              role: "human",
+              content: JSON.stringify(contentObj)
+            }
+          ]
+        }
+      };
+    }
+
+    async function generateFromMessage(msg) {
+      const seq = ++generateSeq;
+      status("Generating diagram…");
+
+      if (msg && msg.apiBaseUrl) apiBaseUrl = String(msg.apiBaseUrl);
+
+      const payload = buildRunsWaitPayload(msg);
+      originalRequestPayload = payload;
+
+      const data = await callRunsWait(payload);
+      if (seq !== generateSeq) return; // stale
+
+      const parsed = normalizeRunsWaitResult(data);
+      if (!parsed || !parsed.sectorDiagrams) throw new Error("Response does not contain sectorDiagrams");
+
+      lastParsedResult = parsed;
+      const sectorKey = pickSectorKey(parsed.sectorDiagrams, msg && msg.sectorKey);
+      if (!sectorKey) throw new Error("No sector diagrams available in response");
+
+      const sectorDiagram = parsed.sectorDiagrams[sectorKey];
+      if (!sectorDiagram) throw new Error(`Sector "${sectorKey}" not found`);
+      if (!sectorDiagram.success) throw new Error(`Sector "${sectorKey}" generation failed`);
+
+      currentSectorKey = sectorKey;
+      const projectNumber = (msg && msg.projectNumber) ? String(msg.projectNumber) : (parsed.summary && parsed.summary.projectNumber) || undefined;
+
+      status(`Rendering sector ${sectorKey}…`);
+      await loadDiagramDataIntoGoJS(sectorDiagram, projectNumber || "", sectorKey);
+
+      postToParent({
+        action: "GENERATED",
+        availableSectors: (parsed.summary && parsed.summary.availableSectors) ? parsed.summary.availableSectors : Object.keys(parsed.sectorDiagrams),
+        sectorKey,
+        projectNumber
+      });
+
+      status(`Ready (sector ${sectorKey})`);
+    }
+
+    async function switchSector(sectorKey) {
+      if (!lastParsedResult || !lastParsedResult.sectorDiagrams) {
+        throw new Error("No previous generation available to switch sectors");
+      }
+
+      const key = String(sectorKey || "").trim().toUpperCase();
+      if (key === "ALL") {
+        currentSectorKey = "ALL";
+        status("Rendering ALL sectors…");
+
+        // Pre-layout each sector (same pipeline as single-sector) then offset side-by-side.
+        const prevVisibility = (myDiagram && myDiagram.div) ? myDiagram.div.style.visibility : "";
+        try {
+          if (myDiagram && myDiagram.div) myDiagram.div.style.visibility = "hidden";
+          const { model, sectorKeys } = await buildCombinedAllSectorsModelAsync();
+
+          // Critical: disable auto-layout so explicit per-sector offsets (loc) are preserved.
+          // NOTE: In GoJS 3.x, setting `diagram.layout = null` can throw. Use a no-op Layout instance instead.
+          const noOpLayout = new go.Layout();
+          noOpLayout.isInitial = false;
+          noOpLayout.isOngoing = false;
+          myDiagram.layout = noOpLayout;
+          myDiagram.model = model;
+          // Model swap resets undo enablement; re-enable so iframe UNDO/REDO works in edit mode.
+          ensureUndoEnabled();
+          resetExportReady();
+          setTimeout(() => { try { markExportReadyIfPossible(); } catch (e) {} }, 0);
+
+          // Route links without re-laying out nodes.
+          setTimeout(() => {
+            applyCurrentRoutingStrategy();
+            try { myDiagram.zoomToFit(); } catch (e) {}
+            try { scheduleLegendPositioning(); } catch (e) {}
+          }, 0);
+
+          status(`Ready (ALL: ${sectorKeys.join(", ")})`);
+          return;
+        } finally {
+          if (myDiagram && myDiagram.div) myDiagram.div.style.visibility = prevVisibility || "visible";
+        }
+      }
+
+      if (!key || !lastParsedResult.sectorDiagrams[key]) {
+        throw new Error(`Sector "${sectorKey}" not available`);
+      }
+      const sectorDiagram = lastParsedResult.sectorDiagrams[key];
+      if (!sectorDiagram.success) throw new Error(`Sector "${key}" generation failed`);
+
+      currentSectorKey = key;
+      status(`Switching to sector ${key}…`);
+      await loadDiagramDataIntoGoJS(sectorDiagram, "", key);
+      status(`Ready (sector ${key})`);
+    }
+
+    function exportModelJson() {
+      if (!myDiagram || !myDiagram.model) throw new Error("Diagram/model not initialized");
+      return myDiagram.model.toJson();
+    }
+
+    function importModelJson(modelJson) {
+      if (!myDiagram) throw new Error("Diagram not initialized");
+      const json = (typeof modelJson === "string") ? modelJson : JSON.stringify(modelJson);
+      const model = go.Model.fromJson(json);
+      // Ensure port props are correct even after import
+      model.linkFromPortIdProperty = "fromPort";
+      model.linkToPortIdProperty = "toPort";
+      myDiagram.model = model;
+      // Model swap resets undo enablement; re-enable so iframe UNDO/REDO works in edit mode.
+      ensureUndoEnabled();
+      myDiagram.delayInitialization(function() {
+      try { applyCurrentRoutingStrategy(); } catch (e) {}
+      try { myDiagram.zoomToFit(); } catch (e) {}
+      try { scheduleLegendPositioning(); } catch (e) {}
+    });
+    }
+
+    // ------------------------------
+    // postMessage handler
+    // ------------------------------
+    window.addEventListener("message", async function(evt) {
+      if (!evt || !evt.data) return;
+      if (!isAllowedMessage(evt)) return;
+
+      // Learn parent origin on first allowed message.
+      if (!allowedParentOrigin && evt.origin && evt.origin !== "null") {
+        allowedParentOrigin = evt.origin;
+      }
+
+      const msg = evt.data;
+      const action = msg.action;
+      if (!action) return;
+
+      try {
+        switch (action) {
+          case "INIT": {
+            if (msg.apiBaseUrl) apiBaseUrl = String(msg.apiBaseUrl);
+            if (typeof msg.allowCrossOrigin === "boolean") allowCrossOrigin = msg.allowCrossOrigin;
+            status("Ready");
+            postToParent({ action: "READY" });
+            break;
+          }
+          case "GENERATE": {
+            await generateFromMessage(msg);
+            break;
+          }
+          case "SWITCH_SECTOR": {
+            await switchSector(String(msg.sectorKey || ""));
+            // Notify parent only AFTER the sector switch completes to avoid races with
+            // parent-side "apply edited model" logic.
+            postToParent({ action: "SECTOR_READY", sectorKey: currentSectorKey || undefined });
+            break;
+          }
+          case "SET_LEGEND_VISIBLE": {
+            setLegendVisible(!!msg.visible);
+            break;
+          }
+          case "GET_MODEL_JSON": {
+            const modelJson = exportModelJson();
+            postToParent({ action: "MODEL_JSON", requestId: msg.requestId, modelJson, sectorKey: currentSectorKey || undefined });
+            break;
+          }
+          case "SET_MODEL_JSON": {
+            importModelJson(msg.modelJson);
+            status("Model loaded");
+            // Acknowledge for parent request tracking (prevents parent-side timeouts on Cancel restore).
+            postToParent({ action: "MODEL_SET", requestId: msg.requestId });
+            break;
+          }
+          case "ZOOM_TO_FIT": {
+            if (myDiagram) myDiagram.zoomToFit();
+            break;
+          }
+          case "SET_EDIT_MODE": {
+            applyEditMode(!!msg.enabled);
+            // Ensure undo is enabled when entering edit mode; model swaps can disable it.
+            if (!!msg.enabled) {
+              try { ensureUndoEnabled(); } catch (e) {}
+              // Start a clean undo stack for the edit session (optional but expected UX).
+              try { myDiagram && myDiagram.undoManager && myDiagram.undoManager.clear(); } catch (e) {}
+            }
+            postToParent({ action: "EDIT_MODE_SET", requestId: msg.requestId, enabled: !!msg.enabled });
+            break;
+          }
+          case "UNDO": {
+            const r = safeUndo();
+            postToParent({ action: "UNDO_RESULT", requestId: msg.requestId, ...r });
+            break;
+          }
+          case "REDO": {
+            const r = safeRedo();
+            postToParent({ action: "REDO_RESULT", requestId: msg.requestId, ...r });
+            break;
+          }
+          case "EXPORT_IMAGE_BLOB": {
+            // Avoid exporting before layout/render completes (common reason for "legend only" exports).
+            await waitForExportReady(60000);
+            const out = exportImageDataUrl({ format: msg.format, background: msg.background, scale: msg.scale });
+            postToParent({
+              action: "EXPORTED_IMAGE_BLOB",
+              requestId: msg.requestId,
+              mimeType: out.mimeType,
+              format: out.format,
+              bytesBase64: dataUrlToBase64(out.dataUrl)
+            });
+            break;
+          }
+          case "EXPORT_SVG": {
+            await waitForExportReady(60000);
+            const svgString = exportSvgString({ background: msg.background, scale: msg.scale });
+            postToParent({ action: "EXPORTED_SVG", requestId: msg.requestId, svgString });
+            break;
+          }
+          case "DEBUG_LEGEND_STATUS": {
+            const contentBounds = computeContentBoundsExcludingLegend();
+            const documentBounds = myDiagram ? myDiagram.documentBounds : null;
+            
+            // Calculate rightmost node position for debugging
+            let rightmostNodeX = Number.MIN_VALUE;
+            let rightmostNodeInfo = '';
+            myDiagram && myDiagram.nodes.each(function(node) {
+              if (node === legendPart) return;
+              node.ensureBounds();
+              const bounds = node.actualBounds;
+              if (bounds) {
+                const nodeRight = bounds.x + bounds.width;
+                if (nodeRight > rightmostNodeX) {
+                  rightmostNodeX = nodeRight;
+                  rightmostNodeInfo = `${node.data.name || node.key} at ${nodeRight}`;
+                }
+              }
+            });
+            
+            const status = {
+              legendExists: !!legendPart,
+              legendVisible: legendPart ? legendPart.visible : false,
+              legendPositioned: legendPositioned,
+              legendLocation: legendPart ? `${legendPart.location.x}, ${legendPart.location.y}` : 'N/A',
+              contentBounds: contentBounds ? `${contentBounds.width}x${contentBounds.height} at ${contentBounds.x},${contentBounds.y}` : 'N/A',
+              contentRightEdge: contentBounds ? contentBounds.x + contentBounds.width : 'N/A',
+              documentBounds: documentBounds ? `${documentBounds.width}x${documentBounds.height}` : 'N/A',
+              rightmostNode: rightmostNodeInfo || 'N/A',
+              gap: legendPart && contentBounds ? legendPart.location.x - (contentBounds.x + contentBounds.width) : 'N/A'
+            };
+            console.log('[iframe] Legend debug status:', status);
+            postToParent({ action: "DEBUG_LEGEND_STATUS_RESULT", requestId: msg.requestId, status });
+            break;
+          }
+          case "FORCE_LEGEND_REPOSITION": {
+            legendPositioned = false;
+            scheduleLegendPositioning();
+            break;
+          }
+          default:
+            // ignore unknown actions
+            break;
+        }
+      } catch (e) {
+        error(e && e.message ? e.message : String(e), e);
+      }
+    });
+
+    // Boot
+    document.addEventListener("DOMContentLoaded", function() {
+      try {
+        init();
+        // Default to view-only until parent explicitly enables edit mode.
+        try { applyEditMode(false); } catch (e) {}
+        status("Ready");
+        postToParent({ action: "READY" });
+      } catch (e) {
+        error("Failed to initialize iframe renderer", e);
+      }
+    });
+  </script>
+</body>
+</html>
+
+
