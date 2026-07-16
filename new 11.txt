@@ -1,0 +1,11 @@
+const secondUserData={
+  "user": "TORRSA4",
+  "summary_kpis": {
+    "solutions_created": 1,
+    "solutions_modified": 1
+  },
+  "data_for_charts": [
+    { "event_type": "solutions_created", "date": "2021-01-27", "month": "2021-01", "week": "2021-W04", "status": "COMPLETED" },
+   
+  ]
+}
