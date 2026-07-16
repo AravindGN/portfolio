@@ -1,0 +1,6997 @@
+[
+  {
+    "user": "TORRSA4",
+    "summary_kpis": {
+      "solutions_created": 499,
+      "solutions_modified": 499
+    },
+    "data_for_charts": [
+      {
+        "event_type": "solutions_created",
+        "date": "2021-01-27",
+        "month": "2021-01",
+        "week": "2021-W04",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-21",
+        "month": "2021-04",
+        "week": "2021-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-08",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-08-19",
+        "month": "2022-08",
+        "week": "2022-W33",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-08-13",
+        "month": "2022-08",
+        "week": "2022-W32",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-12-17",
+        "month": "2025-12",
+        "week": "2025-W51",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-16",
+        "month": "2020-01",
+        "week": "2020-W03",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-18",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-07",
+        "month": "2020-01",
+        "week": "2020-W02",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-29",
+        "month": "2021-07",
+        "week": "2021-W30",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-29",
+        "month": "2021-07",
+        "week": "2021-W30",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-11-26",
+        "month": "2019-11",
+        "week": "2019-W48",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-08-17",
+        "month": "2022-08",
+        "week": "2022-W33",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-21",
+        "month": "2021-04",
+        "week": "2021-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-10",
+        "month": "2019-12",
+        "week": "2019-W50",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-12-01",
+        "month": "2021-12",
+        "week": "2021-W48",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-23",
+        "month": "2021-07",
+        "week": "2021-W29",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-12-17",
+        "month": "2021-12",
+        "week": "2021-W50",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-16",
+        "month": "2020-01",
+        "week": "2020-W03",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-02-01",
+        "month": "2022-02",
+        "week": "2022-W05",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-30",
+        "month": "2020-10",
+        "week": "2020-W44",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-18",
+        "month": "2020-03",
+        "week": "2020-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-25",
+        "month": "2022-04",
+        "week": "2022-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-07-08",
+        "month": "2022-07",
+        "week": "2022-W27",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-02-01",
+        "month": "2022-02",
+        "week": "2022-W05",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-17",
+        "month": "2021-03",
+        "week": "2021-W11",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-03",
+        "month": "2021-02",
+        "week": "2021-W05",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-05-20",
+        "month": "2022-05",
+        "week": "2022-W20",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-11-26",
+        "month": "2019-11",
+        "week": "2019-W48",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-05-27",
+        "month": "2021-05",
+        "week": "2021-W21",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-08",
+        "month": "2021-02",
+        "week": "2021-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-12",
+        "month": "2020-11",
+        "week": "2020-W46",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-05",
+        "month": "2020-06",
+        "week": "2020-W23",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-11-26",
+        "month": "2019-11",
+        "week": "2019-W48",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-03",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-03",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-01",
+        "month": "2020-06",
+        "week": "2020-W23",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-03",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-20",
+        "month": "2020-01",
+        "week": "2020-W04",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-03",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-30",
+        "month": "2020-01",
+        "week": "2020-W05",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-04",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-01-27",
+        "month": "2021-01",
+        "week": "2021-W04",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-24",
+        "month": "2021-03",
+        "week": "2021-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-05-17",
+        "month": "2021-05",
+        "week": "2021-W20",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-21",
+        "month": "2021-07",
+        "week": "2021-W29",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-21",
+        "month": "2021-07",
+        "week": "2021-W29",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-23",
+        "month": "2020-03",
+        "week": "2020-W13",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-05-07",
+        "month": "2021-05",
+        "week": "2021-W18",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-10-29",
+        "month": "2021-10",
+        "week": "2021-W43",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-19",
+        "month": "2021-08",
+        "week": "2021-W33",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-14",
+        "month": "2021-07",
+        "week": "2021-W28",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-06-14",
+        "month": "2021-06",
+        "week": "2021-W24",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-06-01",
+        "month": "2021-06",
+        "week": "2021-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-05-25",
+        "month": "2021-05",
+        "week": "2021-W21",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-05-03",
+        "month": "2021-05",
+        "week": "2021-W18",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-26",
+        "month": "2021-04",
+        "week": "2021-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-26",
+        "month": "2021-04",
+        "week": "2021-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-26",
+        "month": "2021-04",
+        "week": "2021-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-18",
+        "month": "2021-02",
+        "week": "2021-W07",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-05-06",
+        "month": "2021-05",
+        "week": "2021-W18",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-06-24",
+        "month": "2021-06",
+        "week": "2021-W25",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-28",
+        "month": "2021-07",
+        "week": "2021-W30",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-02",
+        "month": "2021-04",
+        "week": "2021-W13",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-21",
+        "month": "2021-04",
+        "week": "2021-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-08-17",
+        "month": "2022-08",
+        "week": "2022-W33",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-01-27",
+        "month": "2021-01",
+        "week": "2021-W04",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-08",
+        "month": "2021-03",
+        "week": "2021-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-05",
+        "month": "2021-04",
+        "week": "2021-W14",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-15",
+        "month": "2021-07",
+        "week": "2021-W28",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-08-17",
+        "month": "2022-08",
+        "week": "2022-W33",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-17",
+        "month": "2020-11",
+        "week": "2020-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-08",
+        "month": "2021-04",
+        "week": "2021-W14",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-30",
+        "month": "2021-03",
+        "week": "2021-W13",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-04",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-18",
+        "month": "2021-02",
+        "week": "2021-W07",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-30",
+        "month": "2020-01",
+        "week": "2020-W05",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-11",
+        "month": "2020-11",
+        "week": "2020-W46",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-18",
+        "month": "2020-11",
+        "week": "2020-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-02",
+        "month": "2021-03",
+        "week": "2021-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-10",
+        "month": "2021-02",
+        "week": "2021-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-10",
+        "month": "2021-02",
+        "week": "2021-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-18",
+        "month": "2021-02",
+        "week": "2021-W07",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-16",
+        "month": "2021-02",
+        "week": "2021-W07",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-16",
+        "month": "2021-02",
+        "week": "2021-W07",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-14",
+        "month": "2021-07",
+        "week": "2021-W28",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-08",
+        "month": "2021-03",
+        "week": "2021-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-16",
+        "month": "2021-03",
+        "week": "2021-W11",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-29",
+        "month": "2021-03",
+        "week": "2021-W13",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-24",
+        "month": "2021-03",
+        "week": "2021-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-24",
+        "month": "2021-03",
+        "week": "2021-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-05",
+        "month": "2021-04",
+        "week": "2021-W14",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-26",
+        "month": "2021-04",
+        "week": "2021-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-23",
+        "month": "2021-04",
+        "week": "2021-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-22",
+        "month": "2021-04",
+        "week": "2021-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-30",
+        "month": "2021-04",
+        "week": "2021-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-23",
+        "month": "2021-07",
+        "week": "2021-W29",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-05-11",
+        "month": "2021-05",
+        "week": "2021-W19",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-23",
+        "month": "2021-07",
+        "week": "2021-W29",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-06-22",
+        "month": "2021-06",
+        "week": "2021-W25",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-10",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-10",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-06",
+        "month": "2021-08",
+        "week": "2021-W31",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-02",
+        "month": "2021-08",
+        "week": "2021-W31",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-10-05",
+        "month": "2021-10",
+        "week": "2021-W40",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-10-29",
+        "month": "2021-10",
+        "week": "2021-W43",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-12-17",
+        "month": "2021-12",
+        "week": "2021-W50",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-12-01",
+        "month": "2021-12",
+        "week": "2021-W48",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-11-30",
+        "month": "2021-11",
+        "week": "2021-W48",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-05-11",
+        "month": "2022-05",
+        "week": "2022-W19",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-10",
+        "month": "2020-11",
+        "week": "2020-W46",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-21",
+        "month": "2021-04",
+        "week": "2021-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-05",
+        "month": "2021-04",
+        "week": "2021-W14",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-05-06",
+        "month": "2021-05",
+        "week": "2021-W18",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-11-26",
+        "month": "2019-11",
+        "week": "2019-W48",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-09",
+        "month": "2021-03",
+        "week": "2021-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-12",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-17",
+        "month": "2021-02",
+        "week": "2021-W07",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2025-07-22",
+        "month": "2025-07",
+        "week": "2025-W30",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-12-05",
+        "month": "2025-12",
+        "week": "2025-W49",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-12",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-05-14",
+        "month": "2021-05",
+        "week": "2021-W19",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2024-09-06",
+        "month": "2024-09",
+        "week": "2024-W36",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2024-09-06",
+        "month": "2024-09",
+        "week": "2024-W36",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2024-09-06",
+        "month": "2024-09",
+        "week": "2024-W36",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2024-09-06",
+        "month": "2024-09",
+        "week": "2024-W36",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2026-04-15",
+        "month": "2026-04",
+        "week": "2026-W16",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-21",
+        "month": "2021-07",
+        "week": "2021-W29",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-18",
+        "month": "2020-11",
+        "week": "2020-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-12",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-11-26",
+        "month": "2019-11",
+        "week": "2019-W48",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-10",
+        "month": "2020-11",
+        "week": "2020-W46",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-12-01",
+        "month": "2021-12",
+        "week": "2021-W48",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-10",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-18",
+        "month": "2020-02",
+        "week": "2020-W08",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-05",
+        "month": "2019-12",
+        "week": "2019-W49",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-04",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-30",
+        "month": "2021-03",
+        "week": "2021-W13",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-21",
+        "month": "2021-04",
+        "week": "2021-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-08",
+        "month": "2021-02",
+        "week": "2021-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-03-14",
+        "month": "2022-03",
+        "week": "2022-W11",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-24",
+        "month": "2021-03",
+        "week": "2021-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-22",
+        "month": "2021-07",
+        "week": "2021-W29",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-04",
+        "month": "2022-04",
+        "week": "2022-W14",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-22",
+        "month": "2021-04",
+        "week": "2021-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-23",
+        "month": "2021-07",
+        "week": "2021-W29",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-28",
+        "month": "2021-07",
+        "week": "2021-W30",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-09",
+        "month": "2021-04",
+        "week": "2021-W14",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-12",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-02",
+        "month": "2021-04",
+        "week": "2021-W13",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-03-25",
+        "month": "2023-03",
+        "week": "2023-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-08",
+        "month": "2021-02",
+        "week": "2021-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-05-06",
+        "month": "2021-05",
+        "week": "2021-W18",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-08",
+        "month": "2021-02",
+        "week": "2021-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-08",
+        "month": "2021-02",
+        "week": "2021-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-19",
+        "month": "2020-02",
+        "week": "2020-W08",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-08",
+        "month": "2021-02",
+        "week": "2021-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-05-06",
+        "month": "2022-05",
+        "week": "2022-W18",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-12",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2024-09-06",
+        "month": "2024-09",
+        "week": "2024-W36",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-08",
+        "month": "2021-02",
+        "week": "2021-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-05",
+        "month": "2021-04",
+        "week": "2021-W14",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-05",
+        "month": "2021-04",
+        "week": "2021-W14",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-04",
+        "month": "2021-08",
+        "week": "2021-W31",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-12-01",
+        "month": "2021-12",
+        "week": "2021-W48",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-22",
+        "month": "2021-04",
+        "week": "2021-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-25",
+        "month": "2021-03",
+        "week": "2021-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-24",
+        "month": "2021-03",
+        "week": "2021-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-24",
+        "month": "2021-03",
+        "week": "2021-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-18",
+        "month": "2021-03",
+        "week": "2021-W11",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-18",
+        "month": "2020-02",
+        "week": "2020-W08",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-06",
+        "month": "2019-12",
+        "week": "2019-W49",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-24",
+        "month": "2021-03",
+        "week": "2021-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-04",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-30",
+        "month": "2021-03",
+        "week": "2021-W13",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-03",
+        "month": "2021-02",
+        "week": "2021-W05",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-03",
+        "month": "2021-02",
+        "week": "2021-W05",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-21",
+        "month": "2021-07",
+        "week": "2021-W29",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2025-07-23",
+        "month": "2025-07",
+        "week": "2025-W30",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-12-05",
+        "month": "2025-12",
+        "week": "2025-W49",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-23",
+        "month": "2020-11",
+        "week": "2020-W48",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-01",
+        "month": "2021-04",
+        "week": "2021-W13",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-12",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-07-26",
+        "month": "2021-07",
+        "week": "2021-W30",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-02-16",
+        "month": "2021-02",
+        "week": "2021-W07",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-30",
+        "month": "2020-03",
+        "week": "2020-W14",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-27",
+        "month": "2019-12",
+        "week": "2019-W52",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-19",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-19",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-19",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-19",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-26",
+        "month": "2020-03",
+        "week": "2020-W13",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-06-24",
+        "month": "2019-06",
+        "week": "2019-W26",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-09-16",
+        "month": "2020-09",
+        "week": "2020-W38",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-09-16",
+        "month": "2020-09",
+        "week": "2020-W38",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-27",
+        "month": "2020-05",
+        "week": "2020-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-27",
+        "month": "2020-05",
+        "week": "2020-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-30",
+        "month": "2020-01",
+        "week": "2020-W05",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-19",
+        "month": "2020-02",
+        "week": "2020-W08",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-17",
+        "month": "2020-11",
+        "week": "2020-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-02",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-27",
+        "month": "2020-05",
+        "week": "2020-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-27",
+        "month": "2020-05",
+        "week": "2020-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-06",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-06-24",
+        "month": "2019-06",
+        "week": "2019-W26",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-26",
+        "month": "2020-03",
+        "week": "2020-W13",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-26",
+        "month": "2020-03",
+        "week": "2020-W13",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-16",
+        "month": "2020-10",
+        "week": "2020-W42",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-19",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-05",
+        "month": "2019-12",
+        "week": "2019-W49",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-30",
+        "month": "2020-10",
+        "week": "2020-W44",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-30",
+        "month": "2020-10",
+        "week": "2020-W44",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-06",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-06-24",
+        "month": "2019-06",
+        "week": "2019-W26",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-27",
+        "month": "2019-12",
+        "week": "2019-W52",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-27",
+        "month": "2019-12",
+        "week": "2019-W52",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-19",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-19",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-19",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-18",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-08",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-08",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-08",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-25",
+        "month": "2020-11",
+        "week": "2020-W48",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-19",
+        "month": "2020-02",
+        "week": "2020-W08",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-06-24",
+        "month": "2019-06",
+        "week": "2019-W26",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-06",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-27",
+        "month": "2019-12",
+        "week": "2019-W52",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-30",
+        "month": "2020-01",
+        "week": "2020-W05",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-29",
+        "month": "2020-01",
+        "week": "2020-W05",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-09",
+        "month": "2021-03",
+        "week": "2021-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-02",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-16",
+        "month": "2020-10",
+        "week": "2020-W42",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-16",
+        "month": "2020-03",
+        "week": "2020-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-06-24",
+        "month": "2019-06",
+        "week": "2019-W26",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-30",
+        "month": "2020-10",
+        "week": "2020-W44",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-09-16",
+        "month": "2020-09",
+        "week": "2020-W38",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-30",
+        "month": "2020-10",
+        "week": "2020-W44",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-09-16",
+        "month": "2020-09",
+        "week": "2020-W38",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-18",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-30",
+        "month": "2020-10",
+        "week": "2020-W44",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-07-10",
+        "month": "2019-07",
+        "week": "2019-W28",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-06-24",
+        "month": "2019-06",
+        "week": "2019-W26",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-27",
+        "month": "2020-05",
+        "week": "2020-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-05",
+        "month": "2019-12",
+        "week": "2019-W49",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-09-16",
+        "month": "2020-09",
+        "week": "2020-W38",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-09-16",
+        "month": "2020-09",
+        "week": "2020-W38",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-30",
+        "month": "2020-10",
+        "week": "2020-W44",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-30",
+        "month": "2020-10",
+        "week": "2020-W44",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-30",
+        "month": "2020-10",
+        "week": "2020-W44",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-06",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-27",
+        "month": "2019-12",
+        "week": "2019-W52",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-18",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-08",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-08",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-08",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-08",
+        "month": "2020-02",
+        "week": "2020-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-07-10",
+        "month": "2019-07",
+        "week": "2019-W28",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-23",
+        "month": "2020-11",
+        "week": "2020-W48",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-09",
+        "month": "2021-03",
+        "week": "2021-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-19",
+        "month": "2020-02",
+        "week": "2020-W08",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2025-10-20",
+        "month": "2025-10",
+        "week": "2025-W43",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2024-04-30",
+        "month": "2024-04",
+        "week": "2024-W18",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2024-04-30",
+        "month": "2024-04",
+        "week": "2024-W18",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-02-16",
+        "month": "2023-02",
+        "week": "2023-W07",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-02-16",
+        "month": "2023-02",
+        "week": "2023-W07",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-02-16",
+        "month": "2023-02",
+        "week": "2023-W07",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-02-16",
+        "month": "2023-02",
+        "week": "2023-W07",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-02-16",
+        "month": "2023-02",
+        "week": "2023-W07",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-02-16",
+        "month": "2023-02",
+        "week": "2023-W07",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-02-16",
+        "month": "2023-02",
+        "week": "2023-W07",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-19",
+        "month": "2020-11",
+        "week": "2020-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-03-14",
+        "month": "2023-03",
+        "week": "2023-W11",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-05-18",
+        "month": "2023-05",
+        "week": "2023-W20",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2026-01-22",
+        "month": "2026-01",
+        "week": "2026-W04",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-03-14",
+        "month": "2023-03",
+        "week": "2023-W11",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-05-18",
+        "month": "2023-05",
+        "week": "2023-W20",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2026-01-22",
+        "month": "2026-01",
+        "week": "2026-W04",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-03-14",
+        "month": "2023-03",
+        "week": "2023-W11",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2025-05-16",
+        "month": "2025-05",
+        "week": "2025-W20",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-03-14",
+        "month": "2023-03",
+        "week": "2023-W11",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-05-18",
+        "month": "2023-05",
+        "week": "2023-W20",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2026-01-22",
+        "month": "2026-01",
+        "week": "2026-W04",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2025-05-16",
+        "month": "2025-05",
+        "week": "2025-W20",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-19",
+        "month": "2020-11",
+        "week": "2020-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-09-15",
+        "month": "2020-09",
+        "week": "2020-W38",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-09-15",
+        "month": "2020-09",
+        "week": "2020-W38",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-02",
+        "month": "2020-10",
+        "week": "2020-W40",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-27",
+        "month": "2020-05",
+        "week": "2020-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-27",
+        "month": "2020-05",
+        "week": "2020-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-01-12",
+        "month": "2023-01",
+        "week": "2023-W02",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-01-12",
+        "month": "2023-01",
+        "week": "2023-W02",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-19",
+        "month": "2020-03",
+        "week": "2020-W12",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-25",
+        "month": "2022-04",
+        "week": "2022-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-04-20",
+        "month": "2021-04",
+        "week": "2021-W16",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-10",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-10",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-25",
+        "month": "2022-04",
+        "week": "2022-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-05-17",
+        "month": "2023-05",
+        "week": "2023-W20",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-04",
+        "month": "2021-03",
+        "week": "2021-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-05-18",
+        "month": "2023-05",
+        "week": "2023-W20",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-02-09",
+        "month": "2023-02",
+        "week": "2023-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-02-09",
+        "month": "2023-02",
+        "week": "2023-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-04-27",
+        "month": "2023-04",
+        "week": "2023-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-21",
+        "month": "2022-04",
+        "week": "2022-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-21",
+        "month": "2022-04",
+        "week": "2022-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-05-18",
+        "month": "2023-05",
+        "week": "2023-W20",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-09-03",
+        "month": "2020-09",
+        "week": "2020-W36",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-15",
+        "month": "2020-05",
+        "week": "2020-W20",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-21",
+        "month": "2022-04",
+        "week": "2022-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-12-22",
+        "month": "2022-12",
+        "week": "2022-W51",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-17",
+        "month": "2020-03",
+        "week": "2020-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-03-18",
+        "month": "2021-03",
+        "week": "2021-W11",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-08-18",
+        "month": "2022-08",
+        "week": "2022-W33",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-11-18",
+        "month": "2022-11",
+        "week": "2022-W46",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-01-19",
+        "month": "2023-01",
+        "week": "2023-W03",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-01-13",
+        "month": "2023-01",
+        "week": "2023-W02",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-07-08",
+        "month": "2022-07",
+        "week": "2022-W27",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-03-23",
+        "month": "2023-03",
+        "week": "2023-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-02",
+        "month": "2020-06",
+        "week": "2020-W23",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-24",
+        "month": "2020-11",
+        "week": "2020-W48",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-27",
+        "month": "2020-05",
+        "week": "2020-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-27",
+        "month": "2020-05",
+        "week": "2020-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-04",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-25",
+        "month": "2022-04",
+        "week": "2022-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-10",
+        "month": "2019-12",
+        "week": "2019-W50",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-17",
+        "month": "2020-03",
+        "week": "2020-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-26",
+        "month": "2020-06",
+        "week": "2020-W26",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-27",
+        "month": "2019-12",
+        "week": "2019-W52",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-11-21",
+        "month": "2019-11",
+        "week": "2019-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-10",
+        "month": "2019-12",
+        "week": "2019-W50",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-18",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-07-14",
+        "month": "2020-07",
+        "week": "2020-W29",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-25",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-08",
+        "month": "2020-01",
+        "week": "2020-W02",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-12",
+        "month": "2020-03",
+        "week": "2020-W11",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-05",
+        "month": "2020-10",
+        "week": "2020-W41",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-03",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-04-16",
+        "month": "2020-04",
+        "week": "2020-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-10",
+        "month": "2019-12",
+        "week": "2019-W50",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-26",
+        "month": "2020-06",
+        "week": "2020-W26",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-16",
+        "month": "2020-06",
+        "week": "2020-W25",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-15",
+        "month": "2020-06",
+        "week": "2020-W25",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-15",
+        "month": "2020-06",
+        "week": "2020-W25",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-15",
+        "month": "2020-06",
+        "week": "2020-W25",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-15",
+        "month": "2020-06",
+        "week": "2020-W25",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-29",
+        "month": "2020-05",
+        "week": "2020-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-27",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-13",
+        "month": "2020-01",
+        "week": "2020-W03",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-19",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-17",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-09",
+        "month": "2019-12",
+        "week": "2019-W50",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-05",
+        "month": "2019-12",
+        "week": "2019-W49",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-06",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-03",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-24",
+        "month": "2020-11",
+        "week": "2020-W48",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-17",
+        "month": "2020-03",
+        "week": "2020-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-22",
+        "month": "2022-04",
+        "week": "2022-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-09-03",
+        "month": "2020-09",
+        "week": "2020-W36",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-19",
+        "month": "2020-03",
+        "week": "2020-W12",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-21",
+        "month": "2022-04",
+        "week": "2022-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-02-09",
+        "month": "2023-02",
+        "week": "2023-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2025-09-29",
+        "month": "2025-09",
+        "week": "2025-W40",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-15",
+        "month": "2020-05",
+        "week": "2020-W20",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2025-05-23",
+        "month": "2025-05",
+        "week": "2025-W21",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-05-17",
+        "month": "2023-05",
+        "week": "2023-W20",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-10",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-06",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-26",
+        "month": "2020-06",
+        "week": "2020-W26",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-03",
+        "month": "2021-08",
+        "week": "2021-W31",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-08",
+        "month": "2020-01",
+        "week": "2020-W02",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-05-18",
+        "month": "2023-05",
+        "week": "2023-W20",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-02",
+        "month": "2020-10",
+        "week": "2020-W40",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-03",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-02-28",
+        "month": "2022-02",
+        "week": "2022-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-08-19",
+        "month": "2022-08",
+        "week": "2022-W33",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-05-17",
+        "month": "2023-05",
+        "week": "2023-W20",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-21",
+        "month": "2022-04",
+        "week": "2022-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2023-02-09",
+        "month": "2023-02",
+        "week": "2023-W06",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-08-10",
+        "month": "2021-08",
+        "week": "2021-W32",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-19",
+        "month": "2020-03",
+        "week": "2020-W12",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-16",
+        "month": "2020-01",
+        "week": "2020-W03",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-25",
+        "month": "2022-04",
+        "week": "2022-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-27",
+        "month": "2020-05",
+        "week": "2020-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-07-10",
+        "month": "2019-07",
+        "week": "2019-W28",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-04",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-28",
+        "month": "2022-04",
+        "week": "2022-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-06",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-10-05",
+        "month": "2020-10",
+        "week": "2020-W41",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-04-16",
+        "month": "2020-04",
+        "week": "2020-W16",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-15",
+        "month": "2020-06",
+        "week": "2020-W25",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-10",
+        "month": "2019-12",
+        "week": "2019-W50",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-17",
+        "month": "2020-03",
+        "week": "2020-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-25",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-03",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-25",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-17",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-10",
+        "month": "2019-12",
+        "week": "2019-W50",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-10",
+        "month": "2019-12",
+        "week": "2019-W50",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-26",
+        "month": "2020-06",
+        "week": "2020-W26",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-26",
+        "month": "2020-06",
+        "week": "2020-W26",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-16",
+        "month": "2020-06",
+        "week": "2020-W25",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-15",
+        "month": "2020-06",
+        "week": "2020-W25",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-15",
+        "month": "2020-06",
+        "week": "2020-W25",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-06-15",
+        "month": "2020-06",
+        "week": "2020-W25",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-27",
+        "month": "2020-05",
+        "week": "2020-W22",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-18",
+        "month": "2020-03",
+        "week": "2020-W12",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-12",
+        "month": "2020-03",
+        "week": "2020-W11",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-27",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-13",
+        "month": "2020-01",
+        "week": "2020-W03",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-19",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-09",
+        "month": "2019-12",
+        "week": "2019-W50",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-05",
+        "month": "2019-12",
+        "week": "2019-W49",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-07",
+        "month": "2020-01",
+        "week": "2020-W02",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-18",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-02-24",
+        "month": "2020-02",
+        "week": "2020-W09",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-02",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2019-12-18",
+        "month": "2019-12",
+        "week": "2019-W51",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-03-03",
+        "month": "2020-03",
+        "week": "2020-W10",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-24",
+        "month": "2020-11",
+        "week": "2020-W48",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-11-03",
+        "month": "2020-11",
+        "week": "2020-W45",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-04-25",
+        "month": "2022-04",
+        "week": "2022-W17",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2025-09-29",
+        "month": "2025-09",
+        "week": "2025-W40",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-09-03",
+        "month": "2020-09",
+        "week": "2020-W36",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-05-15",
+        "month": "2020-05",
+        "week": "2020-W20",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2025-05-23",
+        "month": "2025-05",
+        "week": "2025-W21",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-01-16",
+        "month": "2020-01",
+        "week": "2020-W03",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "INACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-12-22",
+        "month": "2022-12",
+        "week": "2022-W51",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2020-07-13",
+        "month": "2020-07",
+        "week": "2020-W29",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-10-27",
+        "month": "2021-10",
+        "week": "2021-W43",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-11-18",
+        "month": "2025-11",
+        "week": "2025-W47",
+        "status": "COMPLETED"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-08-13",
+        "month": "2022-08",
+        "week": "2022-W32",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-12-17",
+        "month": "2025-12",
+        "week": "2025-W51",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-05-13",
+        "month": "2021-05",
+        "week": "2021-W19",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-12-17",
+        "month": "2025-12",
+        "week": "2025-W51",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-08-13",
+        "month": "2022-08",
+        "week": "2022-W32",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-12-17",
+        "month": "2025-12",
+        "week": "2025-W51",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2021-05-13",
+        "month": "2021-05",
+        "week": "2021-W19",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-12-17",
+        "month": "2025-12",
+        "week": "2025-W51",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-08-13",
+        "month": "2022-08",
+        "week": "2022-W32",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-12-17",
+        "month": "2025-12",
+        "week": "2025-W51",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_created",
+        "date": "2022-08-13",
+        "month": "2022-08",
+        "week": "2022-W32",
+        "status": "ACTIVE"
+      },
+      {
+        "event_type": "solutions_modified",
+        "date": "2025-12-17",
+        "month": "2025-12",
+        "week": "2025-W51",
+        "status": "ACTIVE"
+      }
+    ]
+  }
+]
