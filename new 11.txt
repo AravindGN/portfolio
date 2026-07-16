@@ -5,7 +5,13 @@ const secondUserData={
     "solutions_modified": 1
   },
   "data_for_charts": [
-    { "event_type": "solutions_created", "date": "2021-01-27", "month": "2021-01", "week": "2021-W04", "status": "COMPLETED" },
-   
+ { "event_type": "solutions_created", "date": "2021-01-27", "month": "2021-01", "week": "2021-W04", "status": "COMPLETED" },
+    { "event_type": "solutions_modified", "date": "2021-01-27", "month": "2021-01", "week": "2021-W04", "status": "COMPLETED" },
+    { "event_type": "solutions_created", "date": "2021-04-21", "month": "2021-04", "week": "2021-W16", "status": "COMPLETED" },
+    { "event_type": "solutions_modified", "date": "2021-04-21", "month": "2021-04", "week": "2021-W16", "status": "COMPLETED" },
+    { "event_type": "solutions_created", "date": "2020-02-08", "month": "2020-02", "week": "2020-W05", "status": "COMPLETED" },
+    { "event_type": "solutions_modified", "date": "2020-02-08", "month": "2020-02", "week": "2020-W05", "status": "COMPLETED" },
+    { "event_type": "solutions_created", "date": "2022-08-19", "month": "2022-08", "week": "2022-W33", "status": "COMPLETED" },
+    { "event_type": "solutions_modified", "date": "2022-08-19", "month": "2022-08", "week": "2022-W33", "status": "COMPLETED" },   
   ]
 }
