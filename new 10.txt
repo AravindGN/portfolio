@@ -1,0 +1,4 @@
+[
+{"solutionname": "SBA Morgan", "latitude": "27.950600", "longitude": "-82.457200", "market": 144, "marketname": "Tampa-1", "solutionid": 7171928, "status": "COMPLETED", "solutiontype": "MODIFICATION", "createdby": "TORRSA4", "area": "SOUTH"},
+  {"solutionname": "COREY LAKES-144214-132536", "latitude": "27.955400", "longitude": "-82.452000", "market": 144, "marketname": "Tampa-1", "solutionid": 7386426, "status": "COMPLETED", "solutiontype": "MODIFICATION", "createdby": "TORRSA4", "area": "SOUTH"},
+]
